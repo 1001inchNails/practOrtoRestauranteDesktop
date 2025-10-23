@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<VBox spacing="10" xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.example.practortorestaurantedesktopp.ChatController">
+    <padding>
+        <Insets top="10" right="10" bottom="10" left="10"/>
+    </padding>
+
+    <TextArea fx:id="messagesArea" VBox.vgrow="ALWAYS" editable="false" wrapText="true"/>
+
+    <HBox spacing="10" alignment="CENTER_LEFT">
+        <TextField fx:id="inputField" HBox.hgrow="ALWAYS" promptText="Enter message..."/>
+        <Button fx:id="sendButton" text="Send" onAction="#sendMessage"/>
+    </HBox>
+</VBox>

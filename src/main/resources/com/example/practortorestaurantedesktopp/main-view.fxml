@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.geometry.Insets?>
+
+<TabPane fx:id="mainTabPane" tabClosingPolicy="UNAVAILABLE" xmlns:fx="http://javafx.com/fxml"
+         fx:controller="com.example.practortorestaurantedesktopp.MainController">
+
+    <tabs>
+        <Tab text="Mesa 1">
+            <content>
+                <VBox spacing="10" alignment="CENTER">
+                    <padding>
+                        <Insets top="20" right="20" bottom="20" left="20"/>
+                    </padding>
+                    <Label text="Contenido de Mesa 1"/>
+                    <!-- Add mesa-specific content here -->
+                </VBox>
+            </content>
+        </Tab>
+
+        <Tab text="Mesa 2">
+            <content>
+                <VBox spacing="10" alignment="CENTER">
+                    <padding>
+                        <Insets top="20" right="20" bottom="20" left="20"/>
+                    </padding>
+                    <Label text="Contenido de Mesa 2"/>
+                    <!-- Add mesa-specific content here -->
+                </VBox>
+            </content>
+        </Tab>
+
+        <Tab text="Mesa 3">
+            <content>
+                <VBox spacing="10" alignment="CENTER">
+                    <padding>
+                        <Insets top="20" right="20" bottom="20" left="20"/>
+                    </padding>
+                    <Label text="Contenido de Mesa 3"/>
+                    <!-- Add mesa-specific content here -->
+                </VBox>
+            </content>
+        </Tab>
+
+        <Tab text="Mesa 4">
+            <content>
+                <VBox spacing="10" alignment="CENTER">
+                    <padding>
+                        <Insets top="20" right="20" bottom="20" left="20"/>
+                    </padding>
+                    <Label text="Contenido de Mesa 4"/>
+                    <!-- Add mesa-specific content here -->
+                </VBox>
+            </content>
+        </Tab>
+
+        <Tab text="Mesa 5">
+            <content>
+                <VBox spacing="10" alignment="CENTER">
+                    <padding>
+                        <Insets top="20" right="20" bottom="20" left="20"/>
+                    </padding>
+                    <Label text="Contenido de Mesa 5"/>
+                    <!-- Add mesa-specific content here -->
+                </VBox>
+            </content>
+        </Tab>
+
+        <Tab text="Chat">
+            <content>
+                <fx:include source="chat-tab.fxml"/>
+            </content>
+        </Tab>
+    </tabs>
+</TabPane>
