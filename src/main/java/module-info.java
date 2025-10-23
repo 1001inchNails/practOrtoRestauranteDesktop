@@ -10,6 +10,8 @@ module com.example.practortorestaurantedesktopp {
     requires org.kordamp.bootstrapfx.core;
     requires eu.hansolo.tilesfx;
     requires com.almasb.fxgl.all;
+    requires com.google.gson;
+    requires tyrus.standalone.client;
 
     opens com.example.practortorestaurantedesktopp to javafx.fxml;
     exports com.example.practortorestaurantedesktopp;
