@@ -6,6 +6,8 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.geometry.Insets?>
 
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.control.Button?>
 <TabPane fx:id="mainTabPane" tabClosingPolicy="UNAVAILABLE" xmlns:fx="http://javafx.com/fxml"
          fx:controller="com.example.practortorestaurantedesktopp.MainController">
 
@@ -16,8 +18,28 @@
                     <padding>
                         <Insets top="20" right="20" bottom="20" left="20"/>
                     </padding>
+
+                    <!-- Contenedor de Pedidos -->
+                    <VBox fx:id="pedidoContainer1"
+                          style="-fx-border-width: 1px; -fx-border-color: gray;">
+                        <padding>
+                            <Insets top="10" right="10" bottom="10" left="10"/>
+                        </padding>
+
+                        <!-- Botones de Pedido -->
+                        <HBox alignment="CENTER" spacing="10">
+                            <Button fx:id="cancelarPedidoBtn1"
+                                    text="Cancelar Pedido"
+                                    visible="false"
+                                    managed="true"/>
+                            <Button fx:id="enviarPedidoBtn1"
+                                    text="Enviar Pedido"
+                                    visible="false"
+                                    managed="true"/>
+                        </HBox>
+                    </VBox>
+
                     <Label text="Contenido de Mesa 1"/>
-                    <!-- Add mesa-specific content here -->
                 </VBox>
             </content>
         </Tab>
@@ -28,8 +50,28 @@
                     <padding>
                         <Insets top="20" right="20" bottom="20" left="20"/>
                     </padding>
+
+                    <!-- Contenedor de Pedidos -->
+                    <VBox fx:id="pedidoContainer2"
+                          style="-fx-border-width: 1px; -fx-border-color: gray;">
+                        <padding>
+                            <Insets top="10" right="10" bottom="10" left="10"/>
+                        </padding>
+
+                        <!-- Botones de Pedido -->
+                        <HBox alignment="CENTER" spacing="10">
+                            <Button fx:id="cancelarPedidoBtn2"
+                                    text="Cancelar Pedido"
+                                    visible="false"
+                                    managed="true"/>
+                            <Button fx:id="enviarPedidoBtn2"
+                                    text="Enviar Pedido"
+                                    visible="false"
+                                    managed="true"/>
+                        </HBox>
+                    </VBox>
+
                     <Label text="Contenido de Mesa 2"/>
-                    <!-- Add mesa-specific content here -->
                 </VBox>
             </content>
         </Tab>
@@ -40,8 +82,28 @@
                     <padding>
                         <Insets top="20" right="20" bottom="20" left="20"/>
                     </padding>
+
+                    <!-- Contenedor de Pedidos -->
+                    <VBox fx:id="pedidoContainer3"
+                          style="-fx-border-width: 1px; -fx-border-color: gray;">
+                        <padding>
+                            <Insets top="10" right="10" bottom="10" left="10"/>
+                        </padding>
+
+                        <!-- Botones de Pedido -->
+                        <HBox alignment="CENTER" spacing="10">
+                            <Button fx:id="cancelarPedidoBtn3"
+                                    text="Cancelar Pedido"
+                                    visible="false"
+                                    managed="true"/>
+                            <Button fx:id="enviarPedidoBtn3"
+                                    text="Enviar Pedido"
+                                    visible="false"
+                                    managed="true"/>
+                        </HBox>
+                    </VBox>
+
                     <Label text="Contenido de Mesa 3"/>
-                    <!-- Add mesa-specific content here -->
                 </VBox>
             </content>
         </Tab>
@@ -52,8 +114,28 @@
                     <padding>
                         <Insets top="20" right="20" bottom="20" left="20"/>
                     </padding>
+
+                    <!-- Contenedor de Pedidos -->
+                    <VBox fx:id="pedidoContainer4"
+                          style="-fx-border-width: 1px; -fx-border-color: gray;">
+                        <padding>
+                            <Insets top="10" right="10" bottom="10" left="10"/>
+                        </padding>
+
+                        <!-- Botones de Pedido -->
+                        <HBox alignment="CENTER" spacing="10">
+                            <Button fx:id="cancelarPedidoBtn4"
+                                    text="Cancelar Pedido"
+                                    visible="false"
+                                    managed="true"/>
+                            <Button fx:id="enviarPedidoBtn4"
+                                    text="Enviar Pedido"
+                                    visible="false"
+                                    managed="true"/>
+                        </HBox>
+                    </VBox>
+
                     <Label text="Contenido de Mesa 4"/>
-                    <!-- Add mesa-specific content here -->
                 </VBox>
             </content>
         </Tab>
@@ -64,8 +146,28 @@
                     <padding>
                         <Insets top="20" right="20" bottom="20" left="20"/>
                     </padding>
+
+                    <!-- Contenedor de Pedidos -->
+                    <VBox fx:id="pedidoContainer5"
+                          style="-fx-border-width: 1px; -fx-border-color: gray;">
+                        <padding>
+                            <Insets top="10" right="10" bottom="10" left="10"/>
+                        </padding>
+
+                        <!-- Botones de Pedido -->
+                        <HBox alignment="CENTER" spacing="10">
+                            <Button fx:id="cancelarPedidoBtn5"
+                                    text="Cancelar Pedido"
+                                    visible="false"
+                                    managed="true"/>
+                            <Button fx:id="enviarPedidoBtn5"
+                                    text="Enviar Pedido"
+                                    visible="false"
+                                    managed="true"/>
+                        </HBox>
+                    </VBox>
+
                     <Label text="Contenido de Mesa 5"/>
-                    <!-- Add mesa-specific content here -->
                 </VBox>
             </content>
         </Tab>

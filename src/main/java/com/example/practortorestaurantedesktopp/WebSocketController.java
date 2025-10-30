@@ -11,10 +11,11 @@ import javafx.scene.control.TextField;
 import javax.websocket.*;
 import java.net.URI;
 import java.net.URL;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 @ClientEndpoint
-public class ChatController implements Initializable {
+public class WebSocketController implements Initializable {
 
     private Session session;
     private static final Gson gson = new Gson();
@@ -30,9 +31,9 @@ public class ChatController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
         connectWebSocket("javafx-client");
 
-        // Add Enter key support for sending messages
         inputField.setOnAction(event -> sendMessage());
     }
 
@@ -57,7 +58,15 @@ public class ChatController implements Initializable {
         Platform.runLater(() -> {
             try {
                 Message msg = gson.fromJson(message, Message.class);
-                messagesArea.appendText(msg.sender + ": " + msg.message + "\n");
+                System.out.println("BEEEEEP: "+ msg.type);
+                if (Objects.equals(msg.type, "chat")) {
+                    messagesArea.appendText(msg.sender + ": " + msg.message + "\n");
+                }
+                if (Objects.equals(msg.type, "pedido")) {
+                    CommsManager.getInstance().notificarPedido(msg);
+
+                }
+
             } catch (Exception e) {
                 messagesArea.appendText("Received: " + message + "\n");
             }
@@ -79,7 +88,7 @@ public class ChatController implements Initializable {
         if (session != null && session.isOpen()) {
             String text = inputField.getText().trim();
             if (!text.isEmpty()) {
-                Message msg = new Message("javafx-client", text);
+                Message msg = new Message("chat", text, "Restaurante");
                 session.getAsyncRemote().sendText(gson.toJson(msg));
                 inputField.clear();
                 Platform.runLater(() -> {
@@ -92,13 +101,15 @@ public class ChatController implements Initializable {
     }
 
     public static class Message {
-        public String sender;
+        public String type;
         public String message;
+        public String sender;
         public long timestamp;
 
-        public Message(String sender, String message) {
-            this.sender = sender;
+        public Message(String type, String message, String sender) {
+            this.type = type;
             this.message = message;
+            this.sender = sender;
             this.timestamp = System.currentTimeMillis();
         }
     }

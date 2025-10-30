@@ -11,7 +11,7 @@ public class HelloApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("main-view.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 800, 600); // Increased size for tabs
+        Scene scene = new Scene(fxmlLoader.load(), 800, 600);
         stage.setTitle("Restaurant Desktop - Mesas y Chat");
         stage.setScene(scene);
         stage.show();

@@ -12,6 +12,7 @@ module com.example.practortorestaurantedesktopp {
     requires com.almasb.fxgl.all;
     requires com.google.gson;
     requires tyrus.standalone.client;
+    requires javafx.graphics;
 
     opens com.example.practortorestaurantedesktopp to javafx.fxml;
     exports com.example.practortorestaurantedesktopp;
