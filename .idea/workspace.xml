@@ -4,17 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f631c361-9395-4168-8551-4d8f33424e08" name="Changes" comment="tabs listo">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/practortorestaurantedesktopp/CommsManager.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/practortorestaurantedesktopp/db/MongoDBManager.java" afterDir="false" />
+    <list default="true" id="f631c361-9395-4168-8551-4d8f33424e08" name="Changes" comment="MongoDBManager, fix&#10;MainController manejarPedido">
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/practortorestaurantedesktopp/api/ApiClient.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/practortorestaurantedesktopp/ChatController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/practortorestaurantedesktopp/WebSocketController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/practortorestaurantedesktopp/HelloApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/practortorestaurantedesktopp/HelloApplication.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/practortorestaurantedesktopp/MainController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/practortorestaurantedesktopp/MainController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/practortorestaurantedesktopp/db/MongoDBManager.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/module-info.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/practortorestaurantedesktopp/chat-tab.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/example/practortorestaurantedesktopp/chat-tab.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/practortorestaurantedesktopp/main-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/example/practortorestaurantedesktopp/main-view.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -75,10 +71,10 @@
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "git-widget-placeholder": "master",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/danielcc/Desktop/DAM 1T/code/practicaOrtoRestaurante/desktopIJ",
+    "last_opened_file_path": "C:/Users/dc-cr/Desktop/DAM 1T/code/practicaOrtoRestaurante/desktopIJ",
     "project.structure.last.edited": "Libraries",
     "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2",
+    "project.structure.side.proportion": "0.39195403",
     "settings.editor.selected.configurable": "preferences.lookFeel"
   }
 }]]></component>
@@ -120,12 +116,32 @@
       <option name="project" value="LOCAL" />
       <updated>1761233133324</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="MongoDBManager, fix&#10;MainController manejarPedido">
+      <option name="closed" value="true" />
+      <created>1761847404090</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1761847404090</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="innit mate" />
     <MESSAGE value="tabs listo" />
-    <option name="LAST_COMMIT_MESSAGE" value="tabs listo" />
+    <MESSAGE value="MongoDBManager, fix&#10;MainController manejarPedido" />
+    <option name="LAST_COMMIT_MESSAGE" value="MongoDBManager, fix&#10;MainController manejarPedido" />
   </component>
 </project>
