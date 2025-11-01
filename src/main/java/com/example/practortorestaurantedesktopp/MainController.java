@@ -6,6 +6,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.TabPane;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 
 import java.net.URL;
@@ -23,6 +25,53 @@ public class MainController implements Initializable {
     private Button cancelarPedidoBtn1;
     @FXML
     private Button enviarPedidoBtn1;
+
+    @FXML
+    private VBox chatContainer1;
+    @FXML
+    private TextArea messagesArea1;
+    @FXML
+    private TextField inputField1;
+    @FXML
+    private Button sendButton1;
+
+    @FXML
+    private VBox chatContainer2;
+    @FXML
+    private TextArea messagesArea2;
+    @FXML
+    private TextField inputField2;
+    @FXML
+    private Button sendButton2;
+
+    @FXML
+    private VBox chatContainer3;
+    @FXML
+    private TextArea messagesArea3;
+    @FXML
+    private TextField inputField3;
+    @FXML
+    private Button sendButton3;
+
+    @FXML
+    private VBox chatContainer4;
+    @FXML
+    private TextArea messagesArea4;
+    @FXML
+    private TextField inputField4;
+    @FXML
+    private Button sendButton4;
+
+    @FXML
+    private VBox chatContainer5;
+    @FXML
+    private TextArea messagesArea5;
+    @FXML
+    private TextField inputField5;
+    @FXML
+    private Button sendButton5;
+
+
 
     @FXML
     private VBox pedidoContainer2;
@@ -57,11 +106,70 @@ public class MainController implements Initializable {
         CommsManager.getInstance().setMainController(this);
         ApiClient apiClient = ApiClient.getInstance();
 
+        // setear handlers pa chat
+        setupChatForMesa(1, inputField1, sendButton1, messagesArea1);
+        setupChatForMesa(2, inputField2, sendButton2, messagesArea2);
+        setupChatForMesa(3, inputField3, sendButton3, messagesArea3);
+        setupChatForMesa(4, inputField4, sendButton4, messagesArea4);
+        setupChatForMesa(5, inputField5, sendButton5, messagesArea5);
+
         mainTabPane.widthProperty().addListener((obs, oldVal, newVal) -> {
             adjustTabWidths();
         });
         adjustTabWidths();
         leerPedidoMesaDeBBDD(apiClient, "Mesa1");
+    }
+
+    private void setupChatForMesa(int mesaNumero, TextField inputField, Button sendButton, TextArea messagesArea) {
+        // setear action pal butt
+        sendButton.setOnAction(event -> {
+            String text = inputField.getText().trim();
+            if (!text.isEmpty()) {
+                CommsManager.getInstance().mainAwebSocket(text, "Mesa" + mesaNumero);
+                messagesArea.appendText("Restaurante: " + text + "\n");
+                inputField.clear();
+            }
+        });
+
+        inputField.setOnAction(event -> {
+            sendButton.fire();
+        });
+    }
+
+    public void manejarChat(WebSocketController.Message mensaje) {
+        String sender = mensaje.sender;
+        int numeroMesa = 0;
+        switch (sender){
+            case "Mesa1": numeroMesa = 1;
+                break;
+            case "Mesa2": numeroMesa = 2;
+                break;
+            case "Mesa3": numeroMesa = 3;
+                break;
+            case "Mesa4": numeroMesa = 4;
+                break;
+            case "Mesa5": numeroMesa = 5;
+                break;
+        }
+
+            TextArea targetArea = getMensajeArea(numeroMesa);
+            if (targetArea != null) {
+                Platform.runLater(() -> {
+                    targetArea.appendText(mensaje.sender + ": " + mensaje.message + "\n");
+                });
+            }
+
+    }
+
+    private TextArea getMensajeArea(int mesaNumero) {
+        switch (mesaNumero) {
+            case 1: return messagesArea1;
+            case 2: return messagesArea2;
+            case 3: return messagesArea3;
+            case 4: return messagesArea4;
+            case 5: return messagesArea5;
+            default: return null;
+        }
     }
 
     private void leerPedidoMesaDeBBDD(ApiClient cliente, String mesa) {
@@ -129,8 +237,6 @@ public class MainController implements Initializable {
 
 
     public void manejarPedido(WebSocketController.Message mensaje) {
-        System.out.println("Main: "+mensaje);
-        System.out.println("Main: "+mensaje.type);
         String sender =  mensaje.sender;
         int numeroMesa = 0;
         switch (sender){
@@ -145,7 +251,6 @@ public class MainController implements Initializable {
             case "Mesa5": numeroMesa = 5;
                 break;
         }
-
 
         Button cancelarBtn = getCancelarButton(numeroMesa);
         Button enviarBtn = getEnviarButton(numeroMesa);

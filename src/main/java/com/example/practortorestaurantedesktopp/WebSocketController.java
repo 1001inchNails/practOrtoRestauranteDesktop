@@ -32,9 +32,11 @@ public class WebSocketController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
+        CommsManager.getInstance().setWebSocketController(this);
+
         connectWebSocket("javafx-client");
 
-        inputField.setOnAction(event -> sendMessage());
+        //inputField.setOnAction(event -> sendMessage());
     }
 
     private void connectWebSocket(String clientId) {
@@ -60,9 +62,12 @@ public class WebSocketController implements Initializable {
                 Message msg = gson.fromJson(message, Message.class);
                 System.out.println("BEEEEEP: "+ msg.type);
                 if (Objects.equals(msg.type, "chat")) {
-                    messagesArea.appendText(msg.sender + ": " + msg.message + "\n");
+                    CommsManager.getInstance().webSocketAmain(msg);
+
+                    //messagesArea.appendText(msg.sender + ": " + msg.message + "\n");
                 }
                 if (Objects.equals(msg.type, "pedido")) {
+                    // echar un ojo a esto. Mejor dos
                     CommsManager.getInstance().notificarPedido(msg);
 
                 }
@@ -83,20 +88,29 @@ public class WebSocketController implements Initializable {
         Platform.runLater(() -> messagesArea.appendText("WebSocket error: " + error.getMessage() + "\n"));
     }
 
-    @FXML
-    private void sendMessage() {
+//    @FXML
+//    private void sendMessage() {
+//        if (session != null && session.isOpen()) {
+//            String text = inputField.getText().trim();
+//            if (!text.isEmpty()) {
+//                Message msg = new Message("chat", text, "Restaurante");
+//                session.getAsyncRemote().sendText(gson.toJson(msg));
+//                inputField.clear();
+//                Platform.runLater(() -> {
+//                    messagesArea.appendText("Yo: " + msg.message + "\n");
+//                });
+//            }
+//        } else {
+//            messagesArea.appendText("Not connected to server.\n");
+//        }
+//    }
+
+    public void enviarMensajeChat(String message, String destino) {
         if (session != null && session.isOpen()) {
-            String text = inputField.getText().trim();
-            if (!text.isEmpty()) {
-                Message msg = new Message("chat", text, "Restaurante");
-                session.getAsyncRemote().sendText(gson.toJson(msg));
-                inputField.clear();
-                Platform.runLater(() -> {
-                    messagesArea.appendText("Yo: " + msg.message + "\n");
-                });
-            }
-        } else {
-            messagesArea.appendText("Not connected to server.\n");
+            Message msg = new Message("chat", message, "Restaurante", destino);
+            session.getAsyncRemote().sendText(gson.toJson(msg));
+        }else{
+            System.out.println("Well shit. Server down");
         }
     }
 
@@ -104,12 +118,14 @@ public class WebSocketController implements Initializable {
         public String type;
         public String message;
         public String sender;
+        public String destino;
         public long timestamp;
 
-        public Message(String type, String message, String sender) {
+        public Message(String type, String message, String sender, String destino) {
             this.type = type;
             this.message = message;
             this.sender = sender;
+            this.destino = destino;
             this.timestamp = System.currentTimeMillis();
         }
     }

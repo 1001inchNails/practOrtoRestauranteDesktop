@@ -8,6 +8,8 @@
 
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
 <TabPane fx:id="mainTabPane" tabClosingPolicy="UNAVAILABLE" xmlns:fx="http://javafx.com/fxml"
          fx:controller="com.example.practortorestaurantedesktopp.MainController">
 
@@ -20,7 +22,7 @@
                     </padding>
 
                     <!-- Contenedor de Pedidos -->
-                    <VBox fx:id="pedidoContainer1"
+                    <VBox fx:id="pedidoContainer1" VBox.vgrow="ALWAYS"
                           style="-fx-border-width: 1px; -fx-border-color: gray;">
                         <padding>
                             <Insets top="10" right="10" bottom="10" left="10"/>
@@ -39,7 +41,21 @@
                         </HBox>
                     </VBox>
 
-                    <Label text="Contenido de Mesa 1"/>
+                    <!-- Contenedor de Chat -->
+                    <VBox fx:id="chatContainer1" VBox.vgrow="ALWAYS"
+                          style="-fx-border-width: 1px; -fx-border-color: gray;">
+                        <padding>
+                            <Insets top="10" right="10" bottom="10" left="10"/>
+                        </padding>
+
+                        <VBox alignment="CENTER" spacing="10">
+                            <TextArea fx:id="messagesArea1" VBox.vgrow="ALWAYS" editable="false" wrapText="true"/>
+                                <TextField fx:id="inputField1" HBox.hgrow="ALWAYS" promptText="Introduzca mensaje..."/>
+                                <Button fx:id="sendButton1" text="Send"/>
+                        </VBox>
+                    </VBox>
+
+
                 </VBox>
             </content>
         </Tab>
@@ -71,7 +87,19 @@
                         </HBox>
                     </VBox>
 
-                    <Label text="Contenido de Mesa 2"/>
+                    <!-- Contenedor de Chat -->
+                    <VBox fx:id="chatContainer2" VBox.vgrow="ALWAYS"
+                          style="-fx-border-width: 1px; -fx-border-color: gray;">
+                        <padding>
+                            <Insets top="10" right="10" bottom="10" left="10"/>
+                        </padding>
+
+                        <VBox alignment="CENTER" spacing="10">
+                            <TextArea fx:id="messagesArea2" VBox.vgrow="ALWAYS" editable="false" wrapText="true"/>
+                            <TextField fx:id="inputField2" HBox.hgrow="ALWAYS" promptText="Introduzca mensaje..."/>
+                            <Button fx:id="sendButton2" text="Send"/>
+                        </VBox>
+                    </VBox>
                 </VBox>
             </content>
         </Tab>
@@ -103,7 +131,19 @@
                         </HBox>
                     </VBox>
 
-                    <Label text="Contenido de Mesa 3"/>
+                    <!-- Contenedor de Chat -->
+                    <VBox fx:id="chatContainer3" VBox.vgrow="ALWAYS"
+                          style="-fx-border-width: 1px; -fx-border-color: gray;">
+                        <padding>
+                            <Insets top="10" right="10" bottom="10" left="10"/>
+                        </padding>
+
+                        <VBox alignment="CENTER" spacing="10">
+                            <TextArea fx:id="messagesArea3" VBox.vgrow="ALWAYS" editable="false" wrapText="true"/>
+                            <TextField fx:id="inputField3" HBox.hgrow="ALWAYS" promptText="Introduzca mensaje..."/>
+                            <Button fx:id="sendButton3" text="Send"/>
+                        </VBox>
+                    </VBox>
                 </VBox>
             </content>
         </Tab>
@@ -135,7 +175,19 @@
                         </HBox>
                     </VBox>
 
-                    <Label text="Contenido de Mesa 4"/>
+                    <!-- Contenedor de Chat -->
+                    <VBox fx:id="chatContainer4" VBox.vgrow="ALWAYS"
+                          style="-fx-border-width: 1px; -fx-border-color: gray;">
+                        <padding>
+                            <Insets top="10" right="10" bottom="10" left="10"/>
+                        </padding>
+
+                        <VBox alignment="CENTER" spacing="10">
+                            <TextArea fx:id="messagesArea4" VBox.vgrow="ALWAYS" editable="false" wrapText="true"/>
+                            <TextField fx:id="inputField4" HBox.hgrow="ALWAYS" promptText="Introduzca mensaje..."/>
+                            <Button fx:id="sendButton4" text="Send"/>
+                        </VBox>
+                    </VBox>
                 </VBox>
             </content>
         </Tab>
@@ -167,7 +219,19 @@
                         </HBox>
                     </VBox>
 
-                    <Label text="Contenido de Mesa 5"/>
+                    <!-- Contenedor de Chat -->
+                    <VBox fx:id="chatContainer5" VBox.vgrow="ALWAYS"
+                          style="-fx-border-width: 1px; -fx-border-color: gray;">
+                        <padding>
+                            <Insets top="10" right="10" bottom="10" left="10"/>
+                        </padding>
+
+                        <VBox alignment="CENTER" spacing="10">
+                            <TextArea fx:id="messagesArea5" VBox.vgrow="ALWAYS" editable="false" wrapText="true"/>
+                            <TextField fx:id="inputField5" HBox.hgrow="ALWAYS" promptText="Introduzca mensaje..."/>
+                            <Button fx:id="sendButton5" text="Send"/>
+                        </VBox>
+                    </VBox>
                 </VBox>
             </content>
         </Tab>
