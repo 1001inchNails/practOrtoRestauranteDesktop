@@ -34,7 +34,7 @@ public class WebSocketController implements Initializable {
 
         CommsManager.getInstance().setWebSocketController(this);
 
-        connectWebSocket("javafx-client");
+        connectWebSocket("Restaurante");
 
         //inputField.setOnAction(event -> sendMessage());
     }
@@ -60,16 +60,32 @@ public class WebSocketController implements Initializable {
         Platform.runLater(() -> {
             try {
                 Message msg = gson.fromJson(message, Message.class);
-                System.out.println("BEEEEEP: "+ msg.type);
+
                 if (Objects.equals(msg.type, "chat")) {
                     CommsManager.getInstance().webSocketAmain(msg);
-
-                    //messagesArea.appendText(msg.sender + ": " + msg.message + "\n");
+                    messagesArea.appendText("Enviado por: "+msg.sender+"Mensaje: " + msg.message + "Timestamp: " +"\n");
                 }
-                if (Objects.equals(msg.type, "pedido")) {
-                    // echar un ojo a esto. Mejor dos
+                else if (Objects.equals(msg.type, "pedido")) {
+                    System.out.println("pedido incoming");
+                    CommsManager.getInstance().webSocketAmain(msg);
                     CommsManager.getInstance().notificarPedido(msg);
+                    messagesArea.appendText("Pedido recibido: " + msg.message + "\n");
+                }
+                else if (Objects.equals(msg.type, "error")) {
 
+                    messagesArea.appendText(msg.sender+": Error de conexion: " + msg.message + "\n");
+                }
+                else if (Objects.equals(msg.type, "success") && !Objects.equals(msg.sender, "Restaurante")) {
+                    messagesArea.appendText(msg.sender+": " + msg.message + "\n");
+                }
+                else if (Objects.equals(msg.type, "client_connect") && !Objects.equals(msg.sender, "Restaurante")) {
+
+                    messagesArea.appendText(msg.sender+": " + msg.message + "\n");
+                    CommsManager.getInstance().webSocketAmain(msg);
+                }
+                else if (Objects.equals(msg.type, "client_disconnect")) {
+                    messagesArea.appendText(msg.sender+": " + msg.message + "\n");
+                    CommsManager.getInstance().webSocketAmain(msg);
                 }
 
             } catch (Exception e) {

@@ -28,7 +28,6 @@ public class ApiClient {
         return instance;
     }
 
-    // ✅ Generic GET request returning raw JSON
     public CompletableFuture<JsonElement> get(String endpoint) {
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(BASE_URL + endpoint))
@@ -46,7 +45,6 @@ public class ApiClient {
                 });
     }
 
-    // Example for mesa
     public CompletableFuture<JsonElement> readMesa(String mesaId) {
         String endpoint = "/get/readmesa?mesaId=" + mesaId;
         return get(endpoint);

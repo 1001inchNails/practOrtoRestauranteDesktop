@@ -4,15 +4,14 @@ import com.example.practortorestaurantedesktopp.api.ApiClient;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.TabPane;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Objects;
 import java.util.ResourceBundle;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class MainController implements Initializable {
 
@@ -101,10 +100,25 @@ public class MainController implements Initializable {
     @FXML
     private Button enviarPedidoBtn5;
 
+    private ApiClient apiClient = null;
+
+    private ArrayList<String> listaIdsMongo1;
+    private ArrayList<String> listaIdsMongo2;
+    private ArrayList<String> listaIdsMongo3;
+    private ArrayList<String> listaIdsMongo4;
+    private ArrayList<String> listaIdsMongo5;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
+        listaIdsMongo1 = new ArrayList<>();
+        listaIdsMongo2 = new ArrayList<>();
+        listaIdsMongo3 = new ArrayList<>();
+        listaIdsMongo4 = new ArrayList<>();
+        listaIdsMongo5 = new ArrayList<>();
+
         CommsManager.getInstance().setMainController(this);
-        ApiClient apiClient = ApiClient.getInstance();
+        apiClient = ApiClient.getInstance();
 
         // setear handlers pa chat
         setupChatForMesa(1, inputField1, sendButton1, messagesArea1);
@@ -117,7 +131,9 @@ public class MainController implements Initializable {
             adjustTabWidths();
         });
         adjustTabWidths();
-        leerPedidoMesaDeBBDD(apiClient, "Mesa1");
+
+        //leerPedidoMesaDeBBDD(apiClient, "Mesa1");// test, borrar
+
     }
 
     private void setupChatForMesa(int mesaNumero, TextField inputField, Button sendButton, TextArea messagesArea) {
@@ -138,6 +154,7 @@ public class MainController implements Initializable {
 
     public void manejarChat(WebSocketController.Message mensaje) {
         String sender = mensaje.sender;
+        System.out.println("MC sender: "+sender);
         int numeroMesa = 0;
         switch (sender){
             case "Mesa1": numeroMesa = 1;
@@ -151,7 +168,8 @@ public class MainController implements Initializable {
             case "Mesa5": numeroMesa = 5;
                 break;
         }
-
+        System.out.println("MC numeroMesa: "+numeroMesa);
+        System.out.println("MC mensaje.message: "+mensaje.message);
             TextArea targetArea = getMensajeArea(numeroMesa);
             if (targetArea != null) {
                 Platform.runLater(() -> {
@@ -191,32 +209,91 @@ public class MainController implements Initializable {
                             System.out.println("Victory Achieved: " + message);
 
                             if (jsonObject.has("data")) {
+
+                                AtomicReference<Double> total = new AtomicReference<>(0.0);
                                 var dataArray = jsonObject.getAsJsonArray("data");
                                 System.out.println("Data array: " + dataArray);
 
+                                // Obtener el VBox correspondiente a la mesa
+                                VBox pedidoContainer = getPedidoContainer(mesa);
+                                if (pedidoContainer == null) {
+                                    System.err.println("No se encontró contenedor para: " + mesa);
+                                    return;
+                                }
 
-                                dataArray.forEach(item -> {
-                                    var pedidoObj = item.getAsJsonObject();
-                                    System.out.println("*** Pedido Obj: " + pedidoObj);
+                                // Limpiar el contenedor y agregar nuevos productos EN EL HILO DE JAVAFX
+                                Platform.runLater(() -> {
+                                    pedidoContainer.getChildren().clear();
 
-                                    boolean haSidoServido = pedidoObj.has("haSidoServido")
-                                            && pedidoObj.get("haSidoServido").getAsBoolean();
+                                    dataArray.forEach(item -> {
+                                        var pedidoObj = item.getAsJsonObject();
+                                        System.out.println("*** Pedido Obj: " + pedidoObj);
 
-                                    if (!haSidoServido){
-
-                                        if (pedidoObj.has("pedidos")) {
-                                            var pedidosArray = pedidoObj.getAsJsonArray("pedidos");
-                                            pedidosArray.forEach(p -> {
-                                                var producto = p.getAsJsonObject();
-                                                int id = producto.get("id").getAsInt();
-                                                String nombre = producto.get("nombre").getAsString();
-                                                double precio = producto.get("precio").getAsDouble();
-                                                String descripcion = producto.get("descripcion").getAsString();
-                                                System.out.printf("→ Producto %d: %s (%.2f) - %s%n", id, nombre, precio, descripcion);
-                                            });
+                                        // OBTENER EL MONGO ID
+                                        String mongoId = pedidoObj.has("_id") ? pedidoObj.get("_id").getAsString() : "Sin ID";
+                                        System.out.println("Mongo ID: " + mongoId);
+                                        switch (mesa) {
+                                            case "Mesa1":
+                                                listaIdsMongo1.add(mongoId);
+                                                break;
+                                            case "Mesa2":
+                                                listaIdsMongo2.add(mongoId);
+                                                break;
+                                            case "Mesa3":
+                                                listaIdsMongo3.add(mongoId);
+                                                break;
+                                            case "Mesa4":
+                                                listaIdsMongo4.add(mongoId);
+                                                break;
+                                            case "Mesa5":
+                                                listaIdsMongo5.add(mongoId);
+                                                break;
+                                            default:
+                                                System.out.println("Mesa no reconocida: " + mesa);
+                                                break;
                                         }
 
-                                    }
+                                        boolean haSidoServido = pedidoObj.has("haSidoServido")
+                                                && pedidoObj.get("haSidoServido").getAsBoolean();
+
+                                        if (!haSidoServido){
+                                            if (pedidoObj.has("pedidos")) {
+                                                var pedidosArray = pedidoObj.getAsJsonArray("pedidos");
+
+                                                // Agregar el Mongo ID como primer elemento del pedido
+                                                Label idLabel = new Label("Pedido ID: " + mongoId);
+                                                idLabel.setWrapText(true);
+                                                idLabel.setStyle("-fx-padding: 5px; -fx-background-color: #f0f0f0; -fx-font-weight: bold;");
+                                                pedidoContainer.getChildren().add(idLabel);
+
+                                                pedidosArray.forEach(p -> {
+                                                    var producto = p.getAsJsonObject();
+                                                    int id = producto.get("id").getAsInt();
+                                                    String nombre = producto.get("nombre").getAsString();
+                                                    double precio = producto.get("precio").getAsDouble();
+                                                    total.set(total.get() + precio);
+
+                                                    // Crear un elemento visual para mostrar el producto
+                                                    String productoText = String.format("→ Producto %d: %s (%.2f)", id, nombre, precio);
+
+                                                    // Agregar al contenedor
+                                                    Label productoLabel = new Label(productoText);
+                                                    productoLabel.setWrapText(true);
+                                                    productoLabel.setStyle("-fx-padding: 5px; -fx-border-color: #ccc; -fx-border-width: 0 0 1 0;");
+                                                    pedidoContainer.getChildren().add(productoLabel);
+                                                });
+
+                                                // Agregar separador entre pedidos
+                                                Separator separator = new Separator();
+                                                separator.setStyle("-fx-padding: 5px 0;");
+                                                pedidoContainer.getChildren().add(separator);
+                                            }
+                                        }
+                                    });
+
+                                    Label precioLabel = new Label(String.format("→ Precio Total: %.2f", total.get()));
+                                    precioLabel.setStyle("-fx-font-weight: bold; -fx-font-size: 14px;");
+                                    pedidoContainer.getChildren().add(precioLabel);
                                 });
                             }
 
@@ -235,9 +312,58 @@ public class MainController implements Initializable {
                 });
     }
 
+    private VBox getPedidoContainer(String mesa) {
+        switch (mesa) {
+            case "Mesa1": return pedidoContainer1;
+            case "Mesa2": return pedidoContainer2;
+            case "Mesa3": return pedidoContainer3;
+            case "Mesa4": return pedidoContainer4;
+            case "Mesa5": return pedidoContainer5;
+            default: return null;
+        }
+    }
+    @FXML
+    public void admitirPedidoAmesa() {
+        // Determinar qué mesa está activa basándose en la pestaña seleccionada
+        Tab selectedTab = mainTabPane.getSelectionModel().getSelectedItem();
+        if (selectedTab != null) {
+            String tabText = selectedTab.getText();
+            String sender = "";
+
+            switch (tabText) {
+                case "Mesa 1": sender = "Mesa1"; break;
+                case "Mesa 2": sender = "Mesa2"; break;
+                case "Mesa 3": sender = "Mesa3"; break;
+                case "Mesa 4": sender = "Mesa4"; break;
+                case "Mesa 5": sender = "Mesa5"; break;
+            }
+
+            if (!sender.isEmpty()) {
+                cambiarEstadoApedidos(getListaIdsMongo(sender), sender);
+            }
+        }
+    }
+
+    private ArrayList<String> getListaIdsMongo(String mesa) {
+        switch (mesa) {
+            case "Mesa1": return listaIdsMongo1;
+            case "Mesa2": return listaIdsMongo2;
+            case "Mesa3": return listaIdsMongo3;
+            case "Mesa4": return listaIdsMongo4;
+            case "Mesa5": return listaIdsMongo5;
+            default: return new ArrayList<>();
+        }
+    }
+
+    public void cambiarEstadoApedidos(ArrayList lista, String mesa){
+
+    }
+
 
     public void manejarPedido(WebSocketController.Message mensaje) {
+
         String sender =  mensaje.sender;
+
         int numeroMesa = 0;
         switch (sender){
             case "Mesa1": numeroMesa = 1;
@@ -252,17 +378,15 @@ public class MainController implements Initializable {
                 break;
         }
 
-        Button cancelarBtn = getCancelarButton(numeroMesa);
-        Button enviarBtn = getEnviarButton(numeroMesa);
 
-        if (cancelarBtn != null && enviarBtn != null) {
-            cancelarBtn.setVisible(true);
-            enviarBtn.setVisible(true);
+        leerPedidoMesaDeBBDD(apiClient, sender);
 
-            Platform.runLater(() -> {
-                System.out.println("implementar movidas BBDD, leer todos los pedidos no servidos, (cojer la mongoId) implementar funcionalidad botones enviar, cancelar pedido");
-            });
-        }
+        mostrarBotonesPedido(numeroMesa);
+
+
+
+        System.out.println("implementar movidas BBDD, leer todos los pedidos no servidos, (cojer la mongoId) implementar funcionalidad botones enviar, cancelar pedido");
+
     }
 
     private void setupTabWidths() {
@@ -321,6 +445,7 @@ public class MainController implements Initializable {
                 return null;
         }
     }
+
 
     private Button getEnviarButton(int mesaNumero) {
         switch (mesaNumero) {

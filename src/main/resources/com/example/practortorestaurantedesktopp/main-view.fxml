@@ -10,6 +10,7 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ScrollPane?>
 <TabPane fx:id="mainTabPane" tabClosingPolicy="UNAVAILABLE" xmlns:fx="http://javafx.com/fxml"
          fx:controller="com.example.practortorestaurantedesktopp.MainController">
 
@@ -21,25 +22,28 @@
                         <Insets top="20" right="20" bottom="20" left="20"/>
                     </padding>
 
-                    <!-- Contenedor de Pedidos -->
-                    <VBox fx:id="pedidoContainer1" VBox.vgrow="ALWAYS"
-                          style="-fx-border-width: 1px; -fx-border-color: gray;">
-                        <padding>
-                            <Insets top="10" right="10" bottom="10" left="10"/>
-                        </padding>
+                    <!-- Contenedor de Pedidos con ScrollPane -->
+                    <ScrollPane fitToWidth="true" VBox.vgrow="ALWAYS">
+                        <VBox fx:id="pedidoContainer1"
+                              style="-fx-border-width: 1px; -fx-border-color: gray;">
+                            <padding>
+                                <Insets top="10" right="10" bottom="10" left="10"/>
+                            </padding>
 
-                        <!-- Botones de Pedido -->
-                        <HBox alignment="CENTER" spacing="10">
-                            <Button fx:id="cancelarPedidoBtn1"
-                                    text="Cancelar Pedido"
-                                    visible="false"
-                                    managed="true"/>
-                            <Button fx:id="enviarPedidoBtn1"
-                                    text="Enviar Pedido"
-                                    visible="false"
-                                    managed="true"/>
-                        </HBox>
-                    </VBox>
+                        </VBox>
+                    </ScrollPane>
+
+                    <!-- Botones de Pedido -->
+                    <HBox alignment="CENTER" spacing="10">
+                        <Button fx:id="cancelarPedidoBtn1"
+                                text="Cancelar Pedido"
+                                visible="false"
+                                managed="true"/>
+                        <Button fx:id="enviarPedidoBtn1"
+                                text="Enviar Pedido"
+                                visible="false"
+                                managed="true"/>
+                    </HBox>
 
                     <!-- Contenedor de Chat -->
                     <VBox fx:id="chatContainer1" VBox.vgrow="ALWAYS"
@@ -50,12 +54,10 @@
 
                         <VBox alignment="CENTER" spacing="10">
                             <TextArea fx:id="messagesArea1" VBox.vgrow="ALWAYS" editable="false" wrapText="true"/>
-                                <TextField fx:id="inputField1" HBox.hgrow="ALWAYS" promptText="Introduzca mensaje..."/>
-                                <Button fx:id="sendButton1" text="Send"/>
+                            <TextField fx:id="inputField1" HBox.hgrow="ALWAYS" promptText="Introduzca mensaje..."/>
+                            <Button fx:id="sendButton1" text="Send" onAction="#admitirPedidoAmesa"/>
                         </VBox>
                     </VBox>
-
-
                 </VBox>
             </content>
         </Tab>
@@ -67,25 +69,29 @@
                         <Insets top="20" right="20" bottom="20" left="20"/>
                     </padding>
 
-                    <!-- Contenedor de Pedidos -->
-                    <VBox fx:id="pedidoContainer2"
-                          style="-fx-border-width: 1px; -fx-border-color: gray;">
-                        <padding>
-                            <Insets top="10" right="10" bottom="10" left="10"/>
-                        </padding>
+                    <!-- Contenedor de Pedidos con ScrollPane -->
+                    <ScrollPane fitToWidth="true" VBox.vgrow="ALWAYS">
+                        <VBox fx:id="pedidoContainer2"
+                              style="-fx-border-width: 1px; -fx-border-color: gray;">
+                            <padding>
+                                <Insets top="10" right="10" bottom="10" left="10"/>
+                            </padding>
 
-                        <!-- Botones de Pedido -->
-                        <HBox alignment="CENTER" spacing="10">
-                            <Button fx:id="cancelarPedidoBtn2"
-                                    text="Cancelar Pedido"
-                                    visible="false"
-                                    managed="true"/>
-                            <Button fx:id="enviarPedidoBtn2"
-                                    text="Enviar Pedido"
-                                    visible="false"
-                                    managed="true"/>
-                        </HBox>
-                    </VBox>
+
+                        </VBox>
+                    </ScrollPane>
+
+                    <!-- Botones de Pedido -->
+                    <HBox alignment="CENTER" spacing="10">
+                        <Button fx:id="cancelarPedidoBtn2"
+                                text="Cancelar Pedido"
+                                visible="false"
+                                managed="true"/>
+                        <Button fx:id="enviarPedidoBtn2"
+                                text="Enviar Pedido"
+                                visible="false"
+                                managed="true"/>
+                    </HBox>
 
                     <!-- Contenedor de Chat -->
                     <VBox fx:id="chatContainer2" VBox.vgrow="ALWAYS"
@@ -111,25 +117,29 @@
                         <Insets top="20" right="20" bottom="20" left="20"/>
                     </padding>
 
-                    <!-- Contenedor de Pedidos -->
-                    <VBox fx:id="pedidoContainer3"
-                          style="-fx-border-width: 1px; -fx-border-color: gray;">
-                        <padding>
-                            <Insets top="10" right="10" bottom="10" left="10"/>
-                        </padding>
+                    <!-- Contenedor de Pedidos con ScrollPane -->
+                    <ScrollPane fitToWidth="true" VBox.vgrow="ALWAYS">
+                        <VBox fx:id="pedidoContainer3"
+                              style="-fx-border-width: 1px; -fx-border-color: gray;">
+                            <padding>
+                                <Insets top="10" right="10" bottom="10" left="10"/>
+                            </padding>
 
-                        <!-- Botones de Pedido -->
-                        <HBox alignment="CENTER" spacing="10">
-                            <Button fx:id="cancelarPedidoBtn3"
-                                    text="Cancelar Pedido"
-                                    visible="false"
-                                    managed="true"/>
-                            <Button fx:id="enviarPedidoBtn3"
-                                    text="Enviar Pedido"
-                                    visible="false"
-                                    managed="true"/>
-                        </HBox>
-                    </VBox>
+
+                        </VBox>
+                    </ScrollPane>
+
+                    <!-- Botones de Pedido -->
+                    <HBox alignment="CENTER" spacing="10">
+                        <Button fx:id="cancelarPedidoBtn3"
+                                text="Cancelar Pedido"
+                                visible="false"
+                                managed="true"/>
+                        <Button fx:id="enviarPedidoBtn3"
+                                text="Enviar Pedido"
+                                visible="false"
+                                managed="true"/>
+                    </HBox>
 
                     <!-- Contenedor de Chat -->
                     <VBox fx:id="chatContainer3" VBox.vgrow="ALWAYS"
@@ -155,25 +165,29 @@
                         <Insets top="20" right="20" bottom="20" left="20"/>
                     </padding>
 
-                    <!-- Contenedor de Pedidos -->
-                    <VBox fx:id="pedidoContainer4"
-                          style="-fx-border-width: 1px; -fx-border-color: gray;">
-                        <padding>
-                            <Insets top="10" right="10" bottom="10" left="10"/>
-                        </padding>
+                    <!-- Contenedor de Pedidos con ScrollPane -->
+                    <ScrollPane fitToWidth="true" VBox.vgrow="ALWAYS">
+                        <VBox fx:id="pedidoContainer4"
+                              style="-fx-border-width: 1px; -fx-border-color: gray;">
+                            <padding>
+                                <Insets top="10" right="10" bottom="10" left="10"/>
+                            </padding>
 
-                        <!-- Botones de Pedido -->
-                        <HBox alignment="CENTER" spacing="10">
-                            <Button fx:id="cancelarPedidoBtn4"
-                                    text="Cancelar Pedido"
-                                    visible="false"
-                                    managed="true"/>
-                            <Button fx:id="enviarPedidoBtn4"
-                                    text="Enviar Pedido"
-                                    visible="false"
-                                    managed="true"/>
-                        </HBox>
-                    </VBox>
+
+                        </VBox>
+                    </ScrollPane>
+
+                    <!-- Botones de Pedido -->
+                    <HBox alignment="CENTER" spacing="10">
+                        <Button fx:id="cancelarPedidoBtn4"
+                                text="Cancelar Pedido"
+                                visible="false"
+                                managed="true"/>
+                        <Button fx:id="enviarPedidoBtn4"
+                                text="Enviar Pedido"
+                                visible="false"
+                                managed="true"/>
+                    </HBox>
 
                     <!-- Contenedor de Chat -->
                     <VBox fx:id="chatContainer4" VBox.vgrow="ALWAYS"
@@ -199,25 +213,29 @@
                         <Insets top="20" right="20" bottom="20" left="20"/>
                     </padding>
 
-                    <!-- Contenedor de Pedidos -->
-                    <VBox fx:id="pedidoContainer5"
-                          style="-fx-border-width: 1px; -fx-border-color: gray;">
-                        <padding>
-                            <Insets top="10" right="10" bottom="10" left="10"/>
-                        </padding>
+                    <!-- Contenedor de Pedidos con ScrollPane -->
+                    <ScrollPane fitToWidth="true" VBox.vgrow="ALWAYS">
+                        <VBox fx:id="pedidoContainer5"
+                              style="-fx-border-width: 1px; -fx-border-color: gray;">
+                            <padding>
+                                <Insets top="10" right="10" bottom="10" left="10"/>
+                            </padding>
 
-                        <!-- Botones de Pedido -->
-                        <HBox alignment="CENTER" spacing="10">
-                            <Button fx:id="cancelarPedidoBtn5"
-                                    text="Cancelar Pedido"
-                                    visible="false"
-                                    managed="true"/>
-                            <Button fx:id="enviarPedidoBtn5"
-                                    text="Enviar Pedido"
-                                    visible="false"
-                                    managed="true"/>
-                        </HBox>
-                    </VBox>
+
+                        </VBox>
+                    </ScrollPane>
+
+                    <!-- Botones de Pedido -->
+                    <HBox alignment="CENTER" spacing="10">
+                        <Button fx:id="cancelarPedidoBtn5"
+                                text="Cancelar Pedido"
+                                visible="false"
+                                managed="true"/>
+                        <Button fx:id="enviarPedidoBtn5"
+                                text="Enviar Pedido"
+                                visible="false"
+                                managed="true"/>
+                    </HBox>
 
                     <!-- Contenedor de Chat -->
                     <VBox fx:id="chatContainer5" VBox.vgrow="ALWAYS"
@@ -236,7 +254,7 @@
             </content>
         </Tab>
 
-        <Tab text="Chat">
+        <Tab text="Log">
             <content>
                 <fx:include source="chat-tab.fxml"/>
             </content>

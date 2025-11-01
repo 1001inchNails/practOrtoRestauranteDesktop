@@ -4,12 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f631c361-9395-4168-8551-4d8f33424e08" name="Changes" comment="bis: MongoDBManager hacer llamada leer pedidos, fix&#10;MainController manejarPedido">
+    <list default="true" id="f631c361-9395-4168-8551-4d8f33424e08" name="Changes" comment="bis2: MongoDBManager hacer llamada leer pedidos, fix&#10;MainController manejarPedido">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/practortorestaurantedesktopp/CommsManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/practortorestaurantedesktopp/CommsManager.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/practortorestaurantedesktopp/MainController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/practortorestaurantedesktopp/MainController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/practortorestaurantedesktopp/WebSocketController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/practortorestaurantedesktopp/WebSocketController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/practortorestaurantedesktopp/chat-tab.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/example/practortorestaurantedesktopp/chat-tab.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/practortorestaurantedesktopp/api/ApiClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/practortorestaurantedesktopp/api/ApiClient.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/practortorestaurantedesktopp/main-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/example/practortorestaurantedesktopp/main-view.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -133,7 +132,15 @@
       <option name="project" value="LOCAL" />
       <updated>1761933655118</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="bis2: MongoDBManager hacer llamada leer pedidos, fix&#10;MainController manejarPedido">
+      <option name="closed" value="true" />
+      <created>1761960683643</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1761960683643</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -152,6 +159,7 @@
     <MESSAGE value="tabs listo" />
     <MESSAGE value="MongoDBManager, fix&#10;MainController manejarPedido" />
     <MESSAGE value="bis: MongoDBManager hacer llamada leer pedidos, fix&#10;MainController manejarPedido" />
-    <option name="LAST_COMMIT_MESSAGE" value="bis: MongoDBManager hacer llamada leer pedidos, fix&#10;MainController manejarPedido" />
+    <MESSAGE value="bis2: MongoDBManager hacer llamada leer pedidos, fix&#10;MainController manejarPedido" />
+    <option name="LAST_COMMIT_MESSAGE" value="bis2: MongoDBManager hacer llamada leer pedidos, fix&#10;MainController manejarPedido" />
   </component>
 </project>
