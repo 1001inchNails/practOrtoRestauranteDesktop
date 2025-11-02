@@ -38,11 +38,15 @@
                         <Button fx:id="cancelarPedidoBtn1"
                                 text="Cancelar Pedido"
                                 visible="false"
-                                managed="true"/>
+                                managed="true"
+                                onAction="#cancelarPedidoAmesa"
+                        />
                         <Button fx:id="enviarPedidoBtn1"
                                 text="Enviar Pedido"
                                 visible="false"
-                                managed="true"/>
+                                managed="true"
+                                onAction="#admitirPedidoAmesa"
+                        />
                     </HBox>
 
                     <!-- Contenedor de Chat -->
@@ -55,7 +59,7 @@
                         <VBox alignment="CENTER" spacing="10">
                             <TextArea fx:id="messagesArea1" VBox.vgrow="ALWAYS" editable="false" wrapText="true"/>
                             <TextField fx:id="inputField1" HBox.hgrow="ALWAYS" promptText="Introduzca mensaje..."/>
-                            <Button fx:id="sendButton1" text="Send" onAction="#admitirPedidoAmesa"/>
+                            <Button fx:id="sendButton1" text="Send"/>
                         </VBox>
                     </VBox>
                 </VBox>
@@ -86,11 +90,15 @@
                         <Button fx:id="cancelarPedidoBtn2"
                                 text="Cancelar Pedido"
                                 visible="false"
-                                managed="true"/>
+                                managed="true"
+                                onAction="#cancelarPedidoAmesa"
+                        />
                         <Button fx:id="enviarPedidoBtn2"
                                 text="Enviar Pedido"
                                 visible="false"
-                                managed="true"/>
+                                managed="true"
+                                onAction="#admitirPedidoAmesa"
+                        />
                     </HBox>
 
                     <!-- Contenedor de Chat -->
@@ -134,11 +142,15 @@
                         <Button fx:id="cancelarPedidoBtn3"
                                 text="Cancelar Pedido"
                                 visible="false"
-                                managed="true"/>
+                                managed="true"
+                                onAction="#cancelarPedidoAmesa"
+                        />
                         <Button fx:id="enviarPedidoBtn3"
                                 text="Enviar Pedido"
                                 visible="false"
-                                managed="true"/>
+                                managed="true"
+                                onAction="#admitirPedidoAmesa"
+                        />
                     </HBox>
 
                     <!-- Contenedor de Chat -->
@@ -182,11 +194,15 @@
                         <Button fx:id="cancelarPedidoBtn4"
                                 text="Cancelar Pedido"
                                 visible="false"
-                                managed="true"/>
+                                managed="true"
+                                onAction="#cancelarPedidoAmesa"
+                        />
                         <Button fx:id="enviarPedidoBtn4"
                                 text="Enviar Pedido"
                                 visible="false"
-                                managed="true"/>
+                                managed="true"
+                                onAction="#admitirPedidoAmesa"
+                        />
                     </HBox>
 
                     <!-- Contenedor de Chat -->
@@ -230,11 +246,15 @@
                         <Button fx:id="cancelarPedidoBtn5"
                                 text="Cancelar Pedido"
                                 visible="false"
-                                managed="true"/>
+                                managed="true"
+                                onAction="#cancelarPedidoAmesa"
+                        />
                         <Button fx:id="enviarPedidoBtn5"
                                 text="Enviar Pedido"
                                 visible="false"
-                                managed="true"/>
+                                managed="true"
+                                onAction="#admitirPedidoAmesa"
+                        />
                     </HBox>
 
                     <!-- Contenedor de Chat -->

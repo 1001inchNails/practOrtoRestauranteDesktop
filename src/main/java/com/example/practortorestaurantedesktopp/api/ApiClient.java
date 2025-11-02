@@ -49,4 +49,49 @@ public class ApiClient {
         String endpoint = "/get/readmesa?mesaId=" + mesaId;
         return get(endpoint);
     }
+
+    public CompletableFuture<JsonElement> patch(String endpoint) {
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(BASE_URL + endpoint))
+                .header("Content-Type", "application/json")
+                .method("PATCH", HttpRequest.BodyPublishers.noBody())
+                .build();
+
+        return httpClient.sendAsync(request, HttpResponse.BodyHandlers.ofString())
+                .thenApply(response -> {
+                    if (response.statusCode() == 200) {
+                        return JsonParser.parseString(response.body());
+                    } else {
+                        throw new RuntimeException("HTTP Error: " + response.statusCode() + " - " + response.body());
+                    }
+                });
+    }
+
+    public CompletableFuture<JsonElement> cambiarEstadoPedido(String iddocu, String mesaId, boolean haSidoServido) {
+        String endpoint = String.format("/patch/cambiarestadopedido?iddocu=%s&mesaId=%s&hasidoservido=%b",
+                iddocu, mesaId, haSidoServido);
+        return patch(endpoint);
+    }
+
+    public CompletableFuture<JsonElement> delete(String endpoint) {
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(BASE_URL + endpoint))
+                .header("Content-Type", "application/json")
+                .DELETE()
+                .build();
+
+        return httpClient.sendAsync(request, HttpResponse.BodyHandlers.ofString())
+                .thenApply(response -> {
+                    if (response.statusCode() == 200) {
+                        return JsonParser.parseString(response.body());
+                    } else {
+                        throw new RuntimeException("HTTP Error: " + response.statusCode() + " - " + response.body());
+                    }
+                });
+    }
+
+    public CompletableFuture<JsonElement> eliminarPedido(String iddocu, String mesaId) {
+        String endpoint = String.format("/delete/deletepedido?mesaId=%s&idDocu=%s", mesaId, iddocu);
+        return delete(endpoint);
+    }
 }

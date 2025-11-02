@@ -40,4 +40,16 @@ public class CommsManager {
             webSocketController.enviarMensajeChat(message, destino);
         }
     }
+
+    public void mainAwebSocketPedidoEnviadoAmesa(String destino) {
+        if (webSocketController != null) {
+            webSocketController.enviarMensajePedidoEnviadoAmesaAppM(destino);
+        }
+    }
+
+    public void mainAwebSocketPedidoCanceladoAmesa(String destino) {
+        if (webSocketController != null) {
+            webSocketController.enviarMensajePedidoCanceladoAmesaAppM(destino);
+        }
+    }
 }

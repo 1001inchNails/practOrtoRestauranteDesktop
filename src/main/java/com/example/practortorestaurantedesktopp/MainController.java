@@ -132,7 +132,6 @@ public class MainController implements Initializable {
         });
         adjustTabWidths();
 
-        //leerPedidoMesaDeBBDD(apiClient, "Mesa1");// test, borrar
 
     }
 
@@ -168,8 +167,7 @@ public class MainController implements Initializable {
             case "Mesa5": numeroMesa = 5;
                 break;
         }
-        System.out.println("MC numeroMesa: "+numeroMesa);
-        System.out.println("MC mensaje.message: "+mensaje.message);
+
             TextArea targetArea = getMensajeArea(numeroMesa);
             if (targetArea != null) {
                 Platform.runLater(() -> {
@@ -191,6 +189,9 @@ public class MainController implements Initializable {
     }
 
     private void leerPedidoMesaDeBBDD(ApiClient cliente, String mesa) {
+        // Limpiar la lista antes de procesar nuevos datos
+        limpiarListaIdsMongo(mesa);
+
         cliente.readMesa(mesa)
                 .thenAccept(json -> {
                     try {
@@ -198,18 +199,13 @@ public class MainController implements Initializable {
                         System.out.println("jsonObject: "+jsonObject);
 
                         String resultType = jsonObject.get("type").getAsString();
-                        boolean success = false;
-                        if (Objects.equals(resultType, "success")){
-                            success = true;
-                        }
-
+                        boolean success = "success".equals(resultType);
                         String message = jsonObject.has("message") ? jsonObject.get("message").getAsString() : "Sin mensaje";
 
                         if (success) {
                             System.out.println("Victory Achieved: " + message);
 
                             if (jsonObject.has("data")) {
-
                                 AtomicReference<Double> total = new AtomicReference<>(0.0);
                                 var dataArray = jsonObject.getAsJsonArray("data");
                                 System.out.println("Data array: " + dataArray);
@@ -221,6 +217,9 @@ public class MainController implements Initializable {
                                     return;
                                 }
 
+                                // Obtener la lista específica para esta mesa
+                                ArrayList<String> listaIdsMesa = getListaIdsMongo(mesa);
+
                                 // Limpiar el contenedor y agregar nuevos productos EN EL HILO DE JAVAFX
                                 Platform.runLater(() -> {
                                     pedidoContainer.getChildren().clear();
@@ -229,34 +228,18 @@ public class MainController implements Initializable {
                                         var pedidoObj = item.getAsJsonObject();
                                         System.out.println("*** Pedido Obj: " + pedidoObj);
 
-                                        // OBTENER EL MONGO ID
-                                        String mongoId = pedidoObj.has("_id") ? pedidoObj.get("_id").getAsString() : "Sin ID";
-                                        System.out.println("Mongo ID: " + mongoId);
-                                        switch (mesa) {
-                                            case "Mesa1":
-                                                listaIdsMongo1.add(mongoId);
-                                                break;
-                                            case "Mesa2":
-                                                listaIdsMongo2.add(mongoId);
-                                                break;
-                                            case "Mesa3":
-                                                listaIdsMongo3.add(mongoId);
-                                                break;
-                                            case "Mesa4":
-                                                listaIdsMongo4.add(mongoId);
-                                                break;
-                                            case "Mesa5":
-                                                listaIdsMongo5.add(mongoId);
-                                                break;
-                                            default:
-                                                System.out.println("Mesa no reconocida: " + mesa);
-                                                break;
-                                        }
-
                                         boolean haSidoServido = pedidoObj.has("haSidoServido")
                                                 && pedidoObj.get("haSidoServido").getAsBoolean();
 
+                                        // PRIMERO discriminar por estado, LUEGO obtener Mongo ID
                                         if (!haSidoServido){
+                                            // SOLO ahora obtener el Mongo ID para pedidos no servidos
+                                            String mongoId = pedidoObj.has("_id") ? pedidoObj.get("_id").getAsString() : "Sin ID";
+                                            System.out.println("Mongo ID (pendiente): " + mongoId);
+
+                                            // Agregar a la lista SOLO los pendientes
+                                            listaIdsMesa.add(mongoId);
+
                                             if (pedidoObj.has("pedidos")) {
                                                 var pedidosArray = pedidoObj.getAsJsonArray("pedidos");
 
@@ -288,12 +271,32 @@ public class MainController implements Initializable {
                                                 separator.setStyle("-fx-padding: 5px 0;");
                                                 pedidoContainer.getChildren().add(separator);
                                             }
+                                        } else {
+                                            // Opcional: mostrar en consola los pedidos servidos que se están ignorando
+                                            String mongoIdServido = pedidoObj.has("_id") ? pedidoObj.get("_id").getAsString() : "Sin ID";
+                                            System.out.println("Mongo ID (servido - ignorado): " + mongoIdServido);
                                         }
                                     });
 
-                                    Label precioLabel = new Label(String.format("→ Precio Total: %.2f", total.get()));
-                                    precioLabel.setStyle("-fx-font-weight: bold; -fx-font-size: 14px;");
-                                    pedidoContainer.getChildren().add(precioLabel);
+                                    // Mostrar total solo si hay pedidos pendientes
+                                    if (total.get() > 0) {
+                                        Label precioLabel = new Label(String.format("→ Precio Total: %.2f", total.get()));
+                                        precioLabel.setStyle("-fx-font-weight: bold; -fx-font-size: 14px;");
+                                        pedidoContainer.getChildren().add(precioLabel);
+
+                                        // Mostrar botones ya que hay pedidos pendientes
+                                        mostrarBotonesPedido(obtenerNumeroMesa(mesa));
+                                    } else {
+                                        // Mostrar mensaje si no hay pedidos pendientes
+                                        Label noPedidosLabel = new Label("No hay pedidos pendientes");
+                                        noPedidosLabel.setStyle("-fx-padding: 10px; -fx-font-style: italic;");
+                                        pedidoContainer.getChildren().add(noPedidosLabel);
+
+                                        // Ocultar botones si no hay pedidos pendientes
+                                        ocultarBotonesPedido(obtenerNumeroMesa(mesa));
+                                    }
+
+                                    System.out.println("Lista final de IDs pendientes para " + mesa + ": " + listaIdsMesa);
                                 });
                             }
 
@@ -323,7 +326,7 @@ public class MainController implements Initializable {
         }
     }
     @FXML
-    public void admitirPedidoAmesa() {
+    public void cancelarPedidoAmesa(){
         // Determinar qué mesa está activa basándose en la pestaña seleccionada
         Tab selectedTab = mainTabPane.getSelectionModel().getSelectedItem();
         if (selectedTab != null) {
@@ -338,6 +341,31 @@ public class MainController implements Initializable {
                 case "Mesa 5": sender = "Mesa5"; break;
             }
 
+            ArrayList<String> lista = getListaIdsMongo(sender);
+            System.out.println("LISTAAAAAAAAAAAAAA BORRAAAAAAR: "+lista);
+            if (!sender.isEmpty()) {
+                eliminarPedidos(getListaIdsMongo(sender), sender);
+            }
+        }
+    }
+
+    @FXML
+    public void admitirPedidoAmesa() {
+        // Determinar qué mesa está activa basándose en la pestaña seleccionada
+        Tab selectedTab = mainTabPane.getSelectionModel().getSelectedItem();
+        if (selectedTab != null) {
+            String tabText = selectedTab.getText();
+            String sender = "";
+
+            switch (tabText) {
+                case "Mesa 1": sender = "Mesa1"; break;
+                case "Mesa 2": sender = "Mesa2"; break;
+                case "Mesa 3": sender = "Mesa3"; break;
+                case "Mesa 4": sender = "Mesa4"; break;
+                case "Mesa 5": sender = "Mesa5"; break;
+            }
+            ArrayList<String> lista = getListaIdsMongo(sender);
+            System.out.println("LISTAAAAAAAAAAAAAA: "+lista);
             if (!sender.isEmpty()) {
                 cambiarEstadoApedidos(getListaIdsMongo(sender), sender);
             }
@@ -355,8 +383,155 @@ public class MainController implements Initializable {
         }
     }
 
-    public void cambiarEstadoApedidos(ArrayList lista, String mesa){
 
+    public void cambiarEstadoApedidos(ArrayList<String> listaIdsMongo, String mesa) {
+        if (listaIdsMongo == null || listaIdsMongo.isEmpty()) {
+
+            System.out.println("No hay pedidos para actualizar en " + mesa);
+            return;
+        }
+        for (String mongoId : listaIdsMongo) {
+            apiClient.cambiarEstadoPedido(mongoId, mesa, true)
+                    .thenAccept(json -> {
+                        try {
+                            var jsonObject = json.getAsJsonObject();
+                            String resultType = jsonObject.get("type").getAsString();
+                            boolean success = "success".equals(resultType);
+                            String message = jsonObject.has("message") ? jsonObject.get("message").getAsString() : "Sin mensaje";
+
+                            if (success) {
+                                System.out.println("Pedido actualizado exitosamente: " + mongoId + " - " + message);
+
+                                // Ocultar botones después de enviar exitosamente no mas
+                                int numeroMesa = obtenerNumeroMesa(mesa);
+                                Platform.runLater(() -> {
+                                    ocultarBotonesPedido(numeroMesa);
+                                });
+
+                            } else {
+                                System.out.println("Error al actualizar pedido: " + mongoId + " - " + message);
+                            }
+                        } catch (Exception e) {
+                            System.err.println("Error procesando respuesta de actualizacion: " + e.getMessage());
+                            e.printStackTrace();
+                        }
+                    })
+                    .exceptionally(throwable -> {
+                        System.err.println("Error en la llamada PATCH para " + mongoId + ": " + throwable.getMessage());
+                        return null;
+                    });
+        }
+
+        limpiarListaIdsMongo(mesa);
+        int numMesaFinal = obtenerNumeroMesa(mesa);
+        limpiarPedidoContainer(numMesaFinal);
+        TextArea taMensaje = getMensajeArea(numMesaFinal);
+        taMensaje.appendText("Pedido enviado a mesa "+mesa+"\n");
+
+        enviarMensajesWebSocketPedidoConfirmado(mesa);
+
+    }
+
+    public void eliminarPedidos(ArrayList<String> listaIdsMongo, String mesa) {
+        if (listaIdsMongo == null || listaIdsMongo.isEmpty()) {
+
+            System.out.println("No hay pedidos para eliminar en " + mesa);
+            return;
+        }
+        for (String mongoId : listaIdsMongo) {
+            apiClient.eliminarPedido(mongoId, mesa)
+                    .thenAccept(json -> {
+                        try {
+                            var jsonObject = json.getAsJsonObject();
+                            String resultType = jsonObject.get("type").getAsString();
+                            boolean success = "success".equals(resultType);
+                            String message = jsonObject.has("message") ? jsonObject.get("message").getAsString() : "Sin mensaje";
+
+                            if (success) {
+                                System.out.println("Pedido eliminado exitosamente: " + mongoId + " - " + message);
+
+                                // Ocultar botones después de eliminar exitosamente
+                                int numeroMesa = obtenerNumeroMesa(mesa);
+                                Platform.runLater(() -> {
+                                    ocultarBotonesPedido(numeroMesa);
+                                });
+
+                            } else {
+                                System.out.println("Error al eliminar pedido: " + mongoId + " - " + message);
+                            }
+                        } catch (Exception e) {
+                            System.err.println("Error procesando respuesta de eliminación: " + e.getMessage());
+                            e.printStackTrace();
+                        }
+                    })
+                    .exceptionally(throwable -> {
+                        System.err.println("Error en la llamada DELETE para " + mongoId + ": " + throwable.getMessage());
+                        return null;
+                    });
+        }
+
+        limpiarListaIdsMongo(mesa);
+        int numMesaFinal = obtenerNumeroMesa(mesa);
+        limpiarPedidoContainer(numMesaFinal);
+        TextArea taMensaje = getMensajeArea(numMesaFinal);
+        taMensaje.appendText("Pedido cancelado para mesa " + mesa + "\n");
+
+        enviarMensajeWebSocketPedidoCancelado(mesa);
+    }
+
+    private void enviarMensajeWebSocketPedidoCancelado(String mesa) {
+        String mensajeChat = "Pedido cancelado para " + mesa;
+        CommsManager.getInstance().mainAwebSocket(mensajeChat, mesa);
+
+        CommsManager.getInstance().mainAwebSocketPedidoCanceladoAmesa(mesa);
+    }
+
+    private void enviarMensajesWebSocketPedidoConfirmado(String mesa) {
+        String mensajeChat = "Pedido enviado a " + mesa;
+        CommsManager.getInstance().mainAwebSocket(mensajeChat, mesa);
+
+        CommsManager.getInstance().mainAwebSocketPedidoEnviadoAmesa(mesa);
+    }
+
+    private int obtenerNumeroMesa(String mesa) {
+        switch (mesa) {
+            case "Mesa1": return 1;
+            case "Mesa2": return 2;
+            case "Mesa3": return 3;
+            case "Mesa4": return 4;
+            case "Mesa5": return 5;
+            default: return 0;
+        }
+    }
+
+    private void limpiarListaIdsMongo(String mesa) {
+
+        ArrayList<String> lista = getListaIdsMongo(mesa);
+        System.out.println("lista pre/////////: "+lista);
+        if (lista != null) {
+            lista.clear();
+            System.out.println("lista post/////////: "+lista);
+        }
+    }
+
+    public void limpiarPedidoContainer(int numeroMesa) {
+        Platform.runLater(() -> {
+            VBox container = getPedidoContainer("Mesa" + numeroMesa);
+            if (container != null) {
+                container.getChildren().clear();
+
+                // Limpiar la lista de IDs de MongoDB correspondiente
+                ArrayList<String> listaIds = getListaIdsMongo("Mesa" + numeroMesa);
+                if (listaIds != null) {
+                    listaIds.clear();
+                }
+
+                // Ocultar los botones
+                ocultarBotonesPedido(numeroMesa);
+
+                System.out.println("Contenido de pedidoContainer" + numeroMesa + " limpiado exitosamente");
+            }
+        });
     }
 
 
@@ -382,10 +557,6 @@ public class MainController implements Initializable {
         leerPedidoMesaDeBBDD(apiClient, sender);
 
         mostrarBotonesPedido(numeroMesa);
-
-
-
-        System.out.println("implementar movidas BBDD, leer todos los pedidos no servidos, (cojer la mongoId) implementar funcionalidad botones enviar, cancelar pedido");
 
     }
 

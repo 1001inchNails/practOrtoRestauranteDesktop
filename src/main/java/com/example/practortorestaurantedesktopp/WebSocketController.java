@@ -130,6 +130,24 @@ public class WebSocketController implements Initializable {
         }
     }
 
+    public void enviarMensajePedidoEnviadoAmesaAppM(String destino) {
+        if (session != null && session.isOpen()) {
+            Message msg = new Message("pedido_enviado_a_mesa", "", "Restaurante", destino);
+            session.getAsyncRemote().sendText(gson.toJson(msg));
+        } else {
+            System.out.println("Well shit. Server down");
+        }
+    }
+
+    public void enviarMensajePedidoCanceladoAmesaAppM(String destino) {
+        if (session != null && session.isOpen()) {
+            Message msg = new Message("pedido_cancelado_a_mesa", "", "Restaurante", destino);
+            session.getAsyncRemote().sendText(gson.toJson(msg));
+        } else {
+            System.out.println("Well shit. Server down");
+        }
+    }
+
     public static class Message {
         public String type;
         public String message;
