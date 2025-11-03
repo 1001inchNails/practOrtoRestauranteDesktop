@@ -13,7 +13,6 @@
     <TextArea fx:id="messagesArea" VBox.vgrow="ALWAYS" editable="false" wrapText="true"/>
 
     <HBox spacing="10" alignment="CENTER_LEFT">
-        <TextField fx:id="inputField" HBox.hgrow="ALWAYS" promptText="Enter message..."/>
-        <Button fx:id="sendButton" text="Send" />
+
     </HBox>
 </VBox>

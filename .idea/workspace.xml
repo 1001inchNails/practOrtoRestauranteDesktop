@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f631c361-9395-4168-8551-4d8f33424e08" name="Changes" comment="a ver si no falta na">
+    <list default="true" id="f631c361-9395-4168-8551-4d8f33424e08" name="Changes" comment="control de inputs">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/practortorestaurantedesktopp/MainController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/practortorestaurantedesktopp/MainController.java" afterDir="false" />
     </list>
@@ -153,7 +153,15 @@
       <option name="project" value="LOCAL" />
       <updated>1762113923115</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="control de inputs">
+      <option name="closed" value="true" />
+      <created>1762201414056</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1762201414056</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -175,6 +183,7 @@
     <MESSAGE value="bis2: MongoDBManager hacer llamada leer pedidos, fix&#10;MainController manejarPedido" />
     <MESSAGE value="bis2: cambiarEstadoApedidos, llamada backend cambiar estados con lista correspondiente MongoDBManager hacer llamada leer pedidos, fix&#10;MainController manejarPedido" />
     <MESSAGE value="a ver si no falta na" />
-    <option name="LAST_COMMIT_MESSAGE" value="a ver si no falta na" />
+    <MESSAGE value="control de inputs" />
+    <option name="LAST_COMMIT_MESSAGE" value="control de inputs" />
   </component>
 </project>

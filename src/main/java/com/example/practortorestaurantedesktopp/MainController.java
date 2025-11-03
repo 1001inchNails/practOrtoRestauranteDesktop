@@ -294,10 +294,12 @@ public class MainController implements Initializable {
                                                     int id = producto.get("id").getAsInt();
                                                     String nombre = producto.get("nombre").getAsString();
                                                     double precio = producto.get("precio").getAsDouble();
-                                                    total.set(total.get() + precio);
+                                                    int cantidad = producto.get("cantidad").getAsInt();
+                                                    double subtotal = precio * cantidad;
+                                                    total.set(total.get() + subtotal);
 
                                                     // Crear un elemento visual para mostrar el producto
-                                                    String productoText = String.format("→ Producto %d: %s (%.2f)", id, nombre, precio);
+                                                    String productoText = String.format("→ Producto %d: %s (%.2f) - Cantidad: %d = Subtotal %.2f", id, nombre, precio, cantidad, subtotal);
 
                                                     // Agregar al contenedor
                                                     Label productoLabel = new Label(productoText);
