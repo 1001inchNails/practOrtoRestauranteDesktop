@@ -136,18 +136,58 @@ public class MainController implements Initializable {
     }
 
     private void setupChatForMesa(int mesaNumero, TextField inputField, Button sendButton, TextArea messagesArea) {
-        // setear action pal butt
-        sendButton.setOnAction(event -> {
-            String text = inputField.getText().trim();
-            if (!text.isEmpty()) {
-                CommsManager.getInstance().mainAwebSocket(text, "Mesa" + mesaNumero);
-                messagesArea.appendText("Restaurante: " + text + "\n");
-                inputField.clear();
+        // Regex para validar texto español
+        final String spanishTextRegex = "^[a-zA-ZáéíóúÁÉÍÓÚñÑüÜ\\s.,!?¿¡]*$";
+
+        // Configurar el estilo inicial del botón
+        sendButton.setStyle("-fx-background-color: #9E9E9E; -fx-text-fill: white;"); // Gris deshabilitado
+        sendButton.setDisable(true);
+
+        // Listener para validar en tiempo real
+        inputField.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue == null) return;
+
+            String text = newValue.trim();
+            boolean isValid = text.matches(spanishTextRegex) && !text.isEmpty();
+
+            // Habilitar/deshabilitar botón y cambiar color
+            sendButton.setDisable(!isValid);
+            if (isValid) {
+                sendButton.setStyle("-fx-background-color: #2196F3; -fx-text-fill: white;"); // Azul habilitado
+            } else {
+                sendButton.setStyle("-fx-background-color: #9E9E9E; -fx-text-fill: white;"); // Gris deshabilitado
+            }
+
+            // Opcional: mostrar tooltip de error
+            if (!text.isEmpty() && !text.matches(spanishTextRegex)) {
+                inputField.setStyle("-fx-border-color: red; -fx-border-width: 1px;");
+                Tooltip tooltip = new Tooltip("Solo se permiten letras, acentos, espacios y signos básicos (.,!?¿¡)");
+                inputField.setTooltip(tooltip);
+            } else {
+                inputField.setStyle("");
+                inputField.setTooltip(null);
             }
         });
 
+        // Configurar acción del botón
+        sendButton.setOnAction(event -> {
+            String text = inputField.getText().trim();
+            if (!text.isEmpty() && text.matches(spanishTextRegex)) {
+                CommsManager.getInstance().mainAwebSocket(text, "Mesa" + mesaNumero);
+                messagesArea.appendText("Restaurante: " + text + "\n");
+                inputField.clear();
+
+                // Restablecer el botón a estado deshabilitado después de enviar
+                sendButton.setDisable(true);
+                sendButton.setStyle("-fx-background-color: #9E9E9E; -fx-text-fill: white;");
+            }
+        });
+
+        // Configurar Enter en el TextField
         inputField.setOnAction(event -> {
-            sendButton.fire();
+            if (!sendButton.isDisabled()) {
+                sendButton.fire();
+            }
         });
     }
 
