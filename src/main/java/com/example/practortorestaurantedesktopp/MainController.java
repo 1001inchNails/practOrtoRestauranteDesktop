@@ -4,9 +4,25 @@ import com.example.practortorestaurantedesktopp.api.ApiClient;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
+import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextFlow;
+
+import java.awt.*;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Objects;
@@ -28,7 +44,7 @@ public class MainController implements Initializable {
     @FXML
     private VBox chatContainer1;
     @FXML
-    private TextArea messagesArea1;
+    private TextFlow messagesArea1;
     @FXML
     private TextField inputField1;
     @FXML
@@ -37,7 +53,7 @@ public class MainController implements Initializable {
     @FXML
     private VBox chatContainer2;
     @FXML
-    private TextArea messagesArea2;
+    private TextFlow messagesArea2;
     @FXML
     private TextField inputField2;
     @FXML
@@ -46,7 +62,7 @@ public class MainController implements Initializable {
     @FXML
     private VBox chatContainer3;
     @FXML
-    private TextArea messagesArea3;
+    private TextFlow messagesArea3;
     @FXML
     private TextField inputField3;
     @FXML
@@ -55,7 +71,7 @@ public class MainController implements Initializable {
     @FXML
     private VBox chatContainer4;
     @FXML
-    private TextArea messagesArea4;
+    private TextFlow messagesArea4;
     @FXML
     private TextField inputField4;
     @FXML
@@ -64,7 +80,7 @@ public class MainController implements Initializable {
     @FXML
     private VBox chatContainer5;
     @FXML
-    private TextArea messagesArea5;
+    private TextFlow messagesArea5;
     @FXML
     private TextField inputField5;
     @FXML
@@ -100,6 +116,17 @@ public class MainController implements Initializable {
     @FXML
     private Button enviarPedidoBtn5;
 
+    @FXML
+    private Button hardReset1;
+    @FXML
+    private Button hardReset2;
+    @FXML
+    private Button hardReset3;
+    @FXML
+    private Button hardReset4;
+    @FXML
+    private Button hardReset5;
+
     private ApiClient apiClient = null;
 
     private ArrayList<String> listaIdsMongo1;
@@ -107,6 +134,11 @@ public class MainController implements Initializable {
     private ArrayList<String> listaIdsMongo3;
     private ArrayList<String> listaIdsMongo4;
     private ArrayList<String> listaIdsMongo5;
+
+    private final Color COLOR_PROPIO = Color.web("#2196F3");
+    private final Color COLOR_RESTAURANTE = Color.web("#4CAF50");
+    private final Color COLOR_SISTEMA = Color.web("#FF9800");
+    private final Color COLOR_ERROR = Color.web("#F44336");
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -127,6 +159,12 @@ public class MainController implements Initializable {
         setupChatForMesa(4, inputField4, sendButton4, messagesArea4);
         setupChatForMesa(5, inputField5, sendButton5, messagesArea5);
 
+        setupResetButtForMesa(1, hardReset1);
+        setupResetButtForMesa(2, hardReset2);
+        setupResetButtForMesa(3, hardReset3);
+        setupResetButtForMesa(4, hardReset4);
+        setupResetButtForMesa(5, hardReset5);
+
         mainTabPane.widthProperty().addListener((obs, oldVal, newVal) -> {
             adjustTabWidths();
         });
@@ -135,7 +173,7 @@ public class MainController implements Initializable {
 
     }
 
-    private void setupChatForMesa(int mesaNumero, TextField inputField, Button sendButton, TextArea messagesArea) {
+    private void setupChatForMesa(int mesaNumero, TextField inputField, Button sendButton, TextFlow messagesArea) {
         // Regex para validar texto español
         final String spanishTextRegex = "^[a-zA-ZáéíóúÁÉÍÓÚñÑüÜ\\s.,!?¿¡]*$";
 
@@ -174,7 +212,7 @@ public class MainController implements Initializable {
             String text = inputField.getText().trim();
             if (!text.isEmpty() && text.matches(spanishTextRegex)) {
                 CommsManager.getInstance().mainAwebSocket(text, "Mesa" + mesaNumero);
-                messagesArea.appendText("Restaurante: " + text + "\n");
+                appendMensajeConColor(messagesArea, "Restaurante: " + text, COLOR_PROPIO);
                 inputField.clear();
 
                 // Restablecer el botón a estado deshabilitado después de enviar
@@ -189,6 +227,151 @@ public class MainController implements Initializable {
                 sendButton.fire();
             }
         });
+    }
+
+    // Método principal para agregar mensajes con color
+    private void appendMensajeConColor(TextFlow textFlow, String mensaje, Color color) {
+        Platform.runLater(() -> {
+            Text textNode = new Text(mensaje + "\n");
+            textNode.setFill(color);
+            textFlow.getChildren().add(textNode);
+
+            // Auto-scroll
+            textFlow.layout();
+            textFlow.requestLayout();
+        });
+    }
+
+    // Método para determinar el color basado en el contenido del mensaje
+    private Color getColorParaMensaje(String mensaje) {
+        if (mensaje.startsWith("Restaurante:")) {
+            return COLOR_PROPIO;
+        } else if (mensaje.toLowerCase().contains("[error]") ||
+                mensaje.toLowerCase().contains("error") ||
+                mensaje.toLowerCase().contains("failed")) {
+            return COLOR_ERROR;
+        } else if (mensaje.toLowerCase().contains("conectando") ||
+                mensaje.toLowerCase().contains("bienvenidos") ||
+                mensaje.toLowerCase().contains("cerrando") ||
+                mensaje.toLowerCase().contains("cerrado") ||
+                mensaje.toLowerCase().contains("conectado") ||
+                mensaje.toLowerCase().contains("disconnected")) {
+            return COLOR_SISTEMA;
+        } else {
+            return COLOR_RESTAURANTE;
+        }
+    }
+
+    private void setupResetButtForMesa(int mesaNumero, Button resetButt){
+        if (resetButt == null) return;
+
+        resetButt.setOnAction(event -> {
+            Stage dialogStage = new Stage();
+            dialogStage.setTitle("Resetear Mesa");
+            dialogStage.initModality(Modality.APPLICATION_MODAL);
+            dialogStage.initStyle(StageStyle.UNDECORATED);
+            dialogStage.setResizable(false);
+
+            VBox mainBox = new VBox(15);
+            mainBox.setPadding(new Insets(20));
+            mainBox.setAlignment(Pos.CENTER);
+
+            Label titleLabel = new Label("RESETEAR MESA");
+            titleLabel.setStyle("-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #dc3545;");
+
+            Label messageLabel = new Label("¿Confirmar reset de la Mesa " + mesaNumero + "?");
+            messageLabel.setStyle("-fx-font-size: 14px;");
+            messageLabel.setWrapText(true);
+            messageLabel.setMaxWidth(250);
+
+            HBox buttonBox = new HBox(10);
+            buttonBox.setAlignment(Pos.CENTER);
+
+            Button cancelBtn = new Button("CANCELAR");
+            cancelBtn.setStyle("-fx-background-color: transparent; -fx-border-color: #6c757d; -fx-text-fill: #6c757d; -fx-min-width: 100px;");
+
+            Button resetBtn = new Button("RESETEAR");
+            resetBtn.setStyle("-fx-background-color: #dc3545; -fx-text-fill: white; -fx-min-width: 100px;");
+
+            buttonBox.getChildren().addAll(cancelBtn, resetBtn);
+
+            Separator separator = new Separator();
+
+            mainBox.getChildren().addAll(titleLabel, messageLabel, separator, buttonBox);
+
+            // Acciones
+            cancelBtn.setOnAction(e -> dialogStage.close());
+
+            resetBtn.setOnAction(e -> {
+                dialogStage.close();
+
+                // Ejecutar exterminatus y cuando termine, mostrar el modal de confirmación
+                exterminatus(mesaNumero, () -> {
+                    Platform.runLater(() -> {
+                        showMiniModalConfirmacion(mesaNumero);
+                    });
+                });
+            });
+
+            Scene scene = new Scene(mainBox);
+            dialogStage.setScene(scene);
+            dialogStage.sizeToScene();
+            dialogStage.showAndWait();
+        });
+    }
+
+    private void exterminatus(int numeroMesa, Runnable onComplete) {
+        String mesaId = "Mesa" + numeroMesa;
+
+        apiClient.deleteMesa(mesaId)
+                .thenCompose(result -> {
+                    System.out.println("Mesa " + numeroMesa + " eliminada, cambiando estado...");
+                    return apiClient.cambiarEstadoMesa(mesaId, false);
+                })
+                .thenAccept(result -> {
+                    Platform.runLater(() -> {
+                        limpiarPedidoContainer(numeroMesa);
+                        appendMensajeSistema(numeroMesa, "Mesa reseteada");
+                        appendMensajeSistema(numeroMesa, "----------------------------------------------------------");
+
+                        // Ejecutar el callback cuando todo termine
+                        if (onComplete != null) {
+                            onComplete.run();
+                        }
+                    });
+                })
+                .exceptionally(throwable -> {
+                    System.err.println("Error en hard reset para Mesa " + numeroMesa + ": " + throwable.getMessage());
+
+                    // Ejecutar el callback incluso en caso de error
+                    Platform.runLater(() -> {
+                        if (onComplete != null) {
+                            onComplete.run();
+                        }
+                    });
+                    return null;
+                });
+    }
+
+    private void showMiniModalConfirmacion(int mesaNumero) {
+        Stage stage = new Stage();
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.initStyle(StageStyle.UNDECORATED);
+
+        VBox box = new VBox(15);
+        box.setPadding(new Insets(20));
+        box.setAlignment(Pos.CENTER);
+
+        Label label = new Label("Mesa " + mesaNumero + " reseteada");
+        Button okBtn = new Button("OK");
+        okBtn.setOnAction(e -> stage.close());
+
+        box.getChildren().addAll(label, okBtn);
+
+        Scene scene = new Scene(box);
+        stage.setScene(scene);
+        stage.sizeToScene();
+        stage.showAndWait();
     }
 
     public void manejarChat(WebSocketController.Message mensaje) {
@@ -208,16 +391,43 @@ public class MainController implements Initializable {
                 break;
         }
 
-            TextArea targetArea = getMensajeArea(numeroMesa);
-            if (targetArea != null) {
-                Platform.runLater(() -> {
-                    targetArea.appendText(mensaje.sender + ": " + mensaje.message + "\n");
-                });
-            }
+        TextFlow targetArea = getMensajeFlow(numeroMesa);
+        if (targetArea != null) {
+            String mensajeCompleto = sender + ": " + mensaje.message;
+            Color color = getColorParaMensaje(mensajeCompleto);
+            appendMensajeConColor(targetArea, mensajeCompleto, color);
+        }
 
     }
 
-    private TextArea getMensajeArea(int mesaNumero) {
+    private TextFlow getMensajeFlow(int mesaNumero) {
+        switch (mesaNumero) {
+            case 1: return messagesArea1;
+            case 2: return messagesArea2;
+            case 3: return messagesArea3;
+            case 4: return messagesArea4;
+            case 5: return messagesArea5;
+            default: return null;
+        }
+    }
+
+    // Método para mensajes del sistema
+    public void appendMensajeSistema(int mesaNumero, String mensaje) {
+        TextFlow targetFlow = getMensajeFlow(mesaNumero);
+        if (targetFlow != null) {
+            appendMensajeConColor(targetFlow, mensaje, COLOR_SISTEMA);
+        }
+    }
+
+    // Método para mensajes de error
+    public void appendMensajeError(int mesaNumero, String mensaje) {
+        TextFlow targetFlow = getMensajeFlow(mesaNumero);
+        if (targetFlow != null) {
+            appendMensajeConColor(targetFlow, mensaje, COLOR_ERROR);
+        }
+    }
+
+        private TextFlow getMensajeArea(int mesaNumero) {
         switch (mesaNumero) {
             case 1: return messagesArea1;
             case 2: return messagesArea2;
@@ -467,8 +677,9 @@ public class MainController implements Initializable {
         limpiarListaIdsMongo(mesa);
         int numMesaFinal = obtenerNumeroMesa(mesa);
         limpiarPedidoContainer(numMesaFinal);
-        TextArea taMensaje = getMensajeArea(numMesaFinal);
-        taMensaje.appendText("Pedido enviado a mesa "+mesa+"\n");
+        TextFlow taMensaje = getMensajeArea(numMesaFinal);
+        String texto = "Pedido enviado a mesa "+mesa+"\n";
+        appendMensajeConColor(taMensaje, "Restaurante: " + texto, COLOR_PROPIO);
 
         enviarMensajesWebSocketPedidoConfirmado(mesa);
 
@@ -515,8 +726,10 @@ public class MainController implements Initializable {
         limpiarListaIdsMongo(mesa);
         int numMesaFinal = obtenerNumeroMesa(mesa);
         limpiarPedidoContainer(numMesaFinal);
-        TextArea taMensaje = getMensajeArea(numMesaFinal);
-        taMensaje.appendText("Pedido cancelado para mesa " + mesa + "\n");
+
+        TextFlow taMensaje = getMensajeArea(numMesaFinal);
+        String texto = "Pedido cancelado para mesa " + mesa + "\n";
+        appendMensajeConColor(taMensaje, "Restaurante: " + texto, COLOR_PROPIO);
 
         enviarMensajeWebSocketPedidoCancelado(mesa);
     }

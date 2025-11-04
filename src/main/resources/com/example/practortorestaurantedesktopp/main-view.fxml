@@ -11,6 +11,7 @@
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.text.TextFlow?>
 <TabPane fx:id="mainTabPane" tabClosingPolicy="UNAVAILABLE" xmlns:fx="http://javafx.com/fxml"
          fx:controller="com.example.practortorestaurantedesktopp.MainController">
 
@@ -22,7 +23,6 @@
                         <Insets top="20" right="20" bottom="20" left="20"/>
                     </padding>
 
-                    <!-- Contenedor de Pedidos con ScrollPane -->
                     <ScrollPane fitToWidth="true" VBox.vgrow="ALWAYS">
                         <VBox fx:id="pedidoContainer1"
                               style="-fx-border-width: 1px; -fx-border-color: gray;">
@@ -56,13 +56,24 @@
                             <Insets top="10" right="10" bottom="10" left="10"/>
                         </padding>
 
-                        <VBox alignment="CENTER" spacing="10">
-                            <TextArea fx:id="messagesArea1" VBox.vgrow="ALWAYS" editable="false" wrapText="true"/>
+                        <VBox alignment="CENTER" spacing="10" VBox.vgrow="ALWAYS">
+                            <ScrollPane fx:id="messagesScroll1" fitToWidth="true"
+                                        VBox.vgrow="ALWAYS"
+                                        style="-fx-background-color: transparent;">
+                                <TextFlow fx:id="messagesArea1"
+                                          style="-fx-padding: 5px;"/>
+                            </ScrollPane>
                             <TextField fx:id="inputField1" HBox.hgrow="ALWAYS" promptText="Introduzca mensaje..."/>
                             <Button fx:id="sendButton1" text="Send"/>
                         </VBox>
                     </VBox>
+
+                    <!-- Hard reset de mesa -->
+                    <VBox>
+                        <Button fx:id="hardReset1" text="Resetear Mesa 1"/>
+                    </VBox>
                 </VBox>
+
             </content>
         </Tab>
 
@@ -73,7 +84,6 @@
                         <Insets top="20" right="20" bottom="20" left="20"/>
                     </padding>
 
-                    <!-- Contenedor de Pedidos con ScrollPane -->
                     <ScrollPane fitToWidth="true" VBox.vgrow="ALWAYS">
                         <VBox fx:id="pedidoContainer2"
                               style="-fx-border-width: 1px; -fx-border-color: gray;">
@@ -108,11 +118,20 @@
                             <Insets top="10" right="10" bottom="10" left="10"/>
                         </padding>
 
-                        <VBox alignment="CENTER" spacing="10">
-                            <TextArea fx:id="messagesArea2" VBox.vgrow="ALWAYS" editable="false" wrapText="true"/>
+                        <VBox alignment="CENTER" spacing="10" VBox.vgrow="ALWAYS">
+                            <ScrollPane fx:id="messagesScroll2" fitToWidth="true"
+                                        VBox.vgrow="ALWAYS"
+                                        style="-fx-background-color: transparent;">
+                                <TextFlow fx:id="messagesArea2"
+                                          style="-fx-padding: 5px;"/>
+                            </ScrollPane>
                             <TextField fx:id="inputField2" HBox.hgrow="ALWAYS" promptText="Introduzca mensaje..."/>
                             <Button fx:id="sendButton2" text="Send"/>
                         </VBox>
+                    </VBox>
+                    <!-- Hard reset de mesa -->
+                    <VBox>
+                        <Button fx:id="hardReset2" text="Resetear Mesa 2"/>
                     </VBox>
                 </VBox>
             </content>
@@ -125,7 +144,6 @@
                         <Insets top="20" right="20" bottom="20" left="20"/>
                     </padding>
 
-                    <!-- Contenedor de Pedidos con ScrollPane -->
                     <ScrollPane fitToWidth="true" VBox.vgrow="ALWAYS">
                         <VBox fx:id="pedidoContainer3"
                               style="-fx-border-width: 1px; -fx-border-color: gray;">
@@ -160,11 +178,20 @@
                             <Insets top="10" right="10" bottom="10" left="10"/>
                         </padding>
 
-                        <VBox alignment="CENTER" spacing="10">
-                            <TextArea fx:id="messagesArea3" VBox.vgrow="ALWAYS" editable="false" wrapText="true"/>
+                        <VBox alignment="CENTER" spacing="10" VBox.vgrow="ALWAYS">
+                            <ScrollPane fx:id="messagesScroll3" fitToWidth="true"
+                                        VBox.vgrow="ALWAYS"
+                                        style="-fx-background-color: transparent;">
+                                <TextFlow fx:id="messagesArea3"
+                                          style="-fx-padding: 5px;"/>
+                            </ScrollPane>
                             <TextField fx:id="inputField3" HBox.hgrow="ALWAYS" promptText="Introduzca mensaje..."/>
                             <Button fx:id="sendButton3" text="Send"/>
                         </VBox>
+                    </VBox>
+                    <!-- Hard reset de mesa -->
+                    <VBox>
+                        <Button fx:id="hardReset3" text="Resetear Mesa 3"/>
                     </VBox>
                 </VBox>
             </content>
@@ -177,7 +204,6 @@
                         <Insets top="20" right="20" bottom="20" left="20"/>
                     </padding>
 
-                    <!-- Contenedor de Pedidos con ScrollPane -->
                     <ScrollPane fitToWidth="true" VBox.vgrow="ALWAYS">
                         <VBox fx:id="pedidoContainer4"
                               style="-fx-border-width: 1px; -fx-border-color: gray;">
@@ -212,11 +238,20 @@
                             <Insets top="10" right="10" bottom="10" left="10"/>
                         </padding>
 
-                        <VBox alignment="CENTER" spacing="10">
-                            <TextArea fx:id="messagesArea4" VBox.vgrow="ALWAYS" editable="false" wrapText="true"/>
+                        <VBox alignment="CENTER" spacing="10" VBox.vgrow="ALWAYS">
+                            <ScrollPane fx:id="messagesScroll4" fitToWidth="true"
+                                        VBox.vgrow="ALWAYS"
+                                        style="-fx-background-color: transparent;">
+                                <TextFlow fx:id="messagesArea4"
+                                          style="-fx-padding: 5px;"/>
+                            </ScrollPane>
                             <TextField fx:id="inputField4" HBox.hgrow="ALWAYS" promptText="Introduzca mensaje..."/>
                             <Button fx:id="sendButton4" text="Send"/>
                         </VBox>
+                    </VBox>
+                    <!-- Hard reset de mesa -->
+                    <VBox>
+                        <Button fx:id="hardReset4" text="Resetear Mesa 4"/>
                     </VBox>
                 </VBox>
             </content>
@@ -229,7 +264,6 @@
                         <Insets top="20" right="20" bottom="20" left="20"/>
                     </padding>
 
-                    <!-- Contenedor de Pedidos con ScrollPane -->
                     <ScrollPane fitToWidth="true" VBox.vgrow="ALWAYS">
                         <VBox fx:id="pedidoContainer5"
                               style="-fx-border-width: 1px; -fx-border-color: gray;">
@@ -264,11 +298,20 @@
                             <Insets top="10" right="10" bottom="10" left="10"/>
                         </padding>
 
-                        <VBox alignment="CENTER" spacing="10">
-                            <TextArea fx:id="messagesArea5" VBox.vgrow="ALWAYS" editable="false" wrapText="true"/>
+                        <VBox alignment="CENTER" spacing="10" VBox.vgrow="ALWAYS">
+                            <ScrollPane fx:id="messagesScroll5" fitToWidth="true"
+                                        VBox.vgrow="ALWAYS"
+                                        style="-fx-background-color: transparent;">
+                                <TextFlow fx:id="messagesArea5"
+                                          style="-fx-padding: 5px;"/>
+                            </ScrollPane>
                             <TextField fx:id="inputField5" HBox.hgrow="ALWAYS" promptText="Introduzca mensaje..."/>
                             <Button fx:id="sendButton5" text="Send"/>
                         </VBox>
+                    </VBox>
+                    <!-- Hard reset de mesa -->
+                    <VBox>
+                        <Button fx:id="hardReset5" text="Resetear Mesa 5"/>
                     </VBox>
                 </VBox>
             </content>

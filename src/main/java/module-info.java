@@ -17,6 +17,8 @@ module com.example.practortorestaurantedesktopp {
     requires org.mongodb.driver.sync.client;
     requires org.mongodb.driver.core;
     requires java.net.http;
+    requires java.desktop;
+    requires javafx.media;
 
     opens com.example.practortorestaurantedesktopp to javafx.fxml;
     exports com.example.practortorestaurantedesktopp;

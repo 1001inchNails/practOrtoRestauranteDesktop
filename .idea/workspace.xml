@@ -4,9 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f631c361-9395-4168-8551-4d8f33424e08" name="Changes" comment="control de inputs">
+    <list default="true" id="f631c361-9395-4168-8551-4d8f33424e08" name="Changes" comment="tabs listo">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/practortorestaurantedesktopp/HelloApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/practortorestaurantedesktopp/HelloApplication.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/practortorestaurantedesktopp/MainController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/practortorestaurantedesktopp/MainController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/practortorestaurantedesktopp/WebSocketController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/practortorestaurantedesktopp/WebSocketController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/practortorestaurantedesktopp/api/ApiClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/practortorestaurantedesktopp/api/ApiClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/module-info.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/practortorestaurantedesktopp/main-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/example/practortorestaurantedesktopp/main-view.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -33,7 +38,7 @@
   <component name="GithubPullRequestsUISettings">{
   &quot;selectedUrlAndAccountId&quot;: {
     &quot;url&quot;: &quot;https://github.com/1001inchNails/practOrtoRestauranteDesktop.git&quot;,
-    &quot;accountId&quot;: &quot;cc73666a-86d3-4da4-9af6-974896113b5b&quot;
+    &quot;accountId&quot;: &quot;8e48fe62-2f4c-4f76-bc95-c0f5d3f39b62&quot;
   }
 }</component>
   <component name="MavenImportPreferences">
@@ -65,13 +70,12 @@
     &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
     &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;SONARLINT_PRECOMMIT_ANALYSIS&quot;: &quot;true&quot;,
     &quot;git-widget-placeholder&quot;: &quot;master&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/dc-cr/Desktop/DAM 1T/code/practicaOrtoRestaurante/desktopIJ&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/danielcc/Desktop/DAM 1T/code/practicaOrtoRestaurante/desktopIJ&quot;,
     &quot;project.structure.last.edited&quot;: &quot;Libraries&quot;,
     &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.39195403&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
     &quot;settings.editor.selected.configurable&quot;: &quot;preferences.lookFeel&quot;
   }
 }</component>
@@ -113,55 +117,7 @@
       <option name="project" value="LOCAL" />
       <updated>1761233133324</updated>
     </task>
-    <task id="LOCAL-00003" summary="MongoDBManager, fix&#10;MainController manejarPedido">
-      <option name="closed" value="true" />
-      <created>1761847404090</created>
-      <option name="number" value="00003" />
-      <option name="presentableId" value="LOCAL-00003" />
-      <option name="project" value="LOCAL" />
-      <updated>1761847404090</updated>
-    </task>
-    <task id="LOCAL-00004" summary="bis: MongoDBManager hacer llamada leer pedidos, fix&#10;MainController manejarPedido">
-      <option name="closed" value="true" />
-      <created>1761933655118</created>
-      <option name="number" value="00004" />
-      <option name="presentableId" value="LOCAL-00004" />
-      <option name="project" value="LOCAL" />
-      <updated>1761933655118</updated>
-    </task>
-    <task id="LOCAL-00005" summary="bis2: MongoDBManager hacer llamada leer pedidos, fix&#10;MainController manejarPedido">
-      <option name="closed" value="true" />
-      <created>1761960683643</created>
-      <option name="number" value="00005" />
-      <option name="presentableId" value="LOCAL-00005" />
-      <option name="project" value="LOCAL" />
-      <updated>1761960683643</updated>
-    </task>
-    <task id="LOCAL-00006" summary="bis2: cambiarEstadoApedidos, llamada backend cambiar estados con lista correspondiente MongoDBManager hacer llamada leer pedidos, fix&#10;MainController manejarPedido">
-      <option name="closed" value="true" />
-      <created>1762025936169</created>
-      <option name="number" value="00006" />
-      <option name="presentableId" value="LOCAL-00006" />
-      <option name="project" value="LOCAL" />
-      <updated>1762025936169</updated>
-    </task>
-    <task id="LOCAL-00007" summary="a ver si no falta na">
-      <option name="closed" value="true" />
-      <created>1762113923115</created>
-      <option name="number" value="00007" />
-      <option name="presentableId" value="LOCAL-00007" />
-      <option name="project" value="LOCAL" />
-      <updated>1762113923115</updated>
-    </task>
-    <task id="LOCAL-00008" summary="control de inputs">
-      <option name="closed" value="true" />
-      <created>1762201414056</created>
-      <option name="number" value="00008" />
-      <option name="presentableId" value="LOCAL-00008" />
-      <option name="project" value="LOCAL" />
-      <updated>1762201414056</updated>
-    </task>
-    <option name="localTasksCounter" value="9" />
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -178,12 +134,6 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="innit mate" />
     <MESSAGE value="tabs listo" />
-    <MESSAGE value="MongoDBManager, fix&#10;MainController manejarPedido" />
-    <MESSAGE value="bis: MongoDBManager hacer llamada leer pedidos, fix&#10;MainController manejarPedido" />
-    <MESSAGE value="bis2: MongoDBManager hacer llamada leer pedidos, fix&#10;MainController manejarPedido" />
-    <MESSAGE value="bis2: cambiarEstadoApedidos, llamada backend cambiar estados con lista correspondiente MongoDBManager hacer llamada leer pedidos, fix&#10;MainController manejarPedido" />
-    <MESSAGE value="a ver si no falta na" />
-    <MESSAGE value="control de inputs" />
-    <option name="LAST_COMMIT_MESSAGE" value="control de inputs" />
+    <option name="LAST_COMMIT_MESSAGE" value="tabs listo" />
   </component>
 </project>

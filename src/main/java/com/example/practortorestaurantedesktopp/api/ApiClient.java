@@ -73,6 +73,12 @@ public class ApiClient {
         return patch(endpoint);
     }
 
+    public CompletableFuture<JsonElement> cambiarEstadoMesa(String mesaId, boolean ocupada) {
+        String endpoint = String.format("/patch/cambiarestadomesa?mesaId=%s&ocupada=%b", mesaId, ocupada);
+        return patch(endpoint);
+    }
+
+
     public CompletableFuture<JsonElement> delete(String endpoint) {
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(BASE_URL + endpoint))
@@ -92,6 +98,12 @@ public class ApiClient {
 
     public CompletableFuture<JsonElement> eliminarPedido(String iddocu, String mesaId) {
         String endpoint = String.format("/delete/deletepedido?mesaId=%s&idDocu=%s", mesaId, iddocu);
+        return delete(endpoint);
+    }
+
+    // todos los pedidos de la mesa
+    public CompletableFuture<JsonElement> deleteMesa(String mesaId) {
+        String endpoint = String.format("/delete/deletemesa?mesaId=%s", mesaId);
         return delete(endpoint);
     }
 }

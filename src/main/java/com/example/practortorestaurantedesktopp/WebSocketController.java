@@ -7,6 +7,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.media.AudioClip;
 
 import javax.websocket.*;
 import java.net.URI;
@@ -29,10 +30,25 @@ public class WebSocketController implements Initializable {
     @FXML
     private Button sendButton;
 
+    private AudioClip notificacionSound;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
         CommsManager.getInstance().setWebSocketController(this);
+
+        try {
+            URL soundUrl = getClass().getResource("/sounds/notificacion.mp3");
+            if (soundUrl != null) {
+                notificacionSound = new AudioClip(soundUrl.toString());
+                // volumen (0.0 a 1.0)
+                notificacionSound.setVolume(1.0);
+            } else {
+                System.err.println("No se pudo cargar el archivo de sonido");
+            }
+        } catch (Exception e) {
+            System.err.println("Error cargando el sonido: " + e.getMessage());
+        }
 
         connectWebSocket("Restaurante");
 
@@ -45,14 +61,14 @@ public class WebSocketController implements Initializable {
             container.connectToServer(this, new URI("ws://localhost:8025/websocket/" + clientId));
         } catch (Exception e) {
             e.printStackTrace();
-            Platform.runLater(() -> messagesArea.appendText("Failed to connect to server: " + e.getMessage() + "\n"));
+            Platform.runLater(() -> messagesArea.appendText("Fallo al conectar a servidor: " + e.getMessage() + "\n"));
         }
     }
 
     @OnOpen
     public void onOpen(Session session) {
         this.session = session;
-        Platform.runLater(() -> messagesArea.appendText("Connected to server.\n"));
+        Platform.runLater(() -> messagesArea.appendText("Conectado a servidor.\n"));
     }
 
     @OnMessage
@@ -61,9 +77,14 @@ public class WebSocketController implements Initializable {
             try {
                 Message msg = gson.fromJson(message, Message.class);
 
+                // sonido para mensajes que no son propios
+                if (!Objects.equals(msg.sender, "Restaurante")) {
+                    reproducirSonidoAlerta();
+                }
+
                 if (Objects.equals(msg.type, "chat")) {
                     CommsManager.getInstance().webSocketAmain(msg);
-                    messagesArea.appendText("Enviado por: "+msg.sender+"Mensaje: " + msg.message + "Timestamp: " +"\n");
+                    messagesArea.appendText("Enviado por: "+msg.sender+" / Mensaje: " + msg.message + " / Timestamp: " + msg.timestamp+"\n");
                 }
                 else if (Objects.equals(msg.type, "pedido")) {
                     System.out.println("pedido incoming");
@@ -76,54 +97,38 @@ public class WebSocketController implements Initializable {
                     messagesArea.appendText(msg.sender+": Error de conexion: " + msg.message + "\n");
                 }
                 else if (Objects.equals(msg.type, "success") && !Objects.equals(msg.sender, "Restaurante")) {
-                    messagesArea.appendText(msg.sender+": " + msg.message + "\n");
+                    messagesArea.appendText("success / "+msg.sender+": " + msg.message + "\n");
                 }
                 else if (Objects.equals(msg.type, "client_connect") && !Objects.equals(msg.sender, "Restaurante")) {
 
-                    messagesArea.appendText(msg.sender+": " + msg.message + "\n");
+                    messagesArea.appendText("Cliente conectado / "+msg.sender+": " + msg.message + "\n");
                     CommsManager.getInstance().webSocketAmain(msg);
                 }
                 else if (Objects.equals(msg.type, "client_disconnect")) {
-                    messagesArea.appendText(msg.sender+": " + msg.message + "\n");
+                    messagesArea.appendText("Cliente desconectado / "+msg.sender+": " + msg.message + "\n");
                     CommsManager.getInstance().webSocketAmain(msg);
                 }
 
             } catch (Exception e) {
-                messagesArea.appendText("Received: " + message + "\n");
+                messagesArea.appendText("Recibido: " + message + "\n");
             }
         });
     }
 
     @OnClose
     public void onClose() {
-        Platform.runLater(() -> messagesArea.appendText("Disconnected from server.\n"));
+        Platform.runLater(() -> messagesArea.appendText("Desconectado de servidor.\n"));
     }
 
     @OnError
     public void onError(Throwable error) {
-        Platform.runLater(() -> messagesArea.appendText("WebSocket error: " + error.getMessage() + "\n"));
+        Platform.runLater(() -> messagesArea.appendText("Error WebSocket: " + error.getMessage() + "\n"));
     }
-
-//    @FXML
-//    private void sendMessage() {
-//        if (session != null && session.isOpen()) {
-//            String text = inputField.getText().trim();
-//            if (!text.isEmpty()) {
-//                Message msg = new Message("chat", text, "Restaurante");
-//                session.getAsyncRemote().sendText(gson.toJson(msg));
-//                inputField.clear();
-//                Platform.runLater(() -> {
-//                    messagesArea.appendText("Yo: " + msg.message + "\n");
-//                });
-//            }
-//        } else {
-//            messagesArea.appendText("Not connected to server.\n");
-//        }
-//    }
 
     public void enviarMensajeChat(String message, String destino) {
         if (session != null && session.isOpen()) {
             Message msg = new Message("chat", message, "Restaurante", destino);
+            messagesArea.appendText("Mensaje enviado  a "+msg.sender);
             session.getAsyncRemote().sendText(gson.toJson(msg));
         }else{
             System.out.println("Well shit. Server down");
@@ -145,6 +150,16 @@ public class WebSocketController implements Initializable {
             session.getAsyncRemote().sendText(gson.toJson(msg));
         } else {
             System.out.println("Well shit. Server down");
+        }
+    }
+
+    private void reproducirSonidoAlerta() {
+        try {
+            if (notificacionSound != null) {
+                notificacionSound.play();
+            }
+        } catch (Exception e) {
+            System.err.println("Error reproduciendo sonido: " + e.getMessage());
         }
     }
 
