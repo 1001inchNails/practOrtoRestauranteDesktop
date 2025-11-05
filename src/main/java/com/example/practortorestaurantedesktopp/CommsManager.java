@@ -1,4 +1,3 @@
-// CommunicationManager.java
 package com.example.practortorestaurantedesktopp;
 
 public class CommsManager {
@@ -21,6 +20,10 @@ public class CommsManager {
 
     public void setWebSocketController(WebSocketController controller) {
         this.webSocketController = controller;
+    }
+
+    public WebSocketController getWebSocketController() {
+        return webSocketController;
     }
 
     public void notificarPedido(WebSocketController.Message mensaje) {
@@ -50,6 +53,12 @@ public class CommsManager {
     public void mainAwebSocketPedidoCanceladoAmesa(String destino) {
         if (webSocketController != null) {
             webSocketController.enviarMensajePedidoCanceladoAmesaAppM(destino);
+        }
+    }
+
+    public void sendLastPedidoBarraInferior (String nuevoPedido){
+        if (mainController != null) {
+            mainController.setLastPedido(nuevoPedido);
         }
     }
 }

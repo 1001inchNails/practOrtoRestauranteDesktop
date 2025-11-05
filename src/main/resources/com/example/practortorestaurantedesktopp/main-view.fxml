@@ -12,315 +12,349 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.text.TextFlow?>
-<TabPane fx:id="mainTabPane" tabClosingPolicy="UNAVAILABLE" xmlns:fx="http://javafx.com/fxml"
-         fx:controller="com.example.practortorestaurantedesktopp.MainController">
 
-    <tabs>
-        <Tab text="Mesa 1">
-            <content>
-                <VBox spacing="10" alignment="CENTER">
-                    <padding>
-                        <Insets top="20" right="20" bottom="20" left="20"/>
-                    </padding>
+<?import javafx.scene.control.Slider?>
+<VBox xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.example.practortorestaurantedesktopp.MainController">
 
-                    <ScrollPane fitToWidth="true" VBox.vgrow="ALWAYS">
-                        <VBox fx:id="pedidoContainer1"
+    <TabPane fx:id="mainTabPane" tabClosingPolicy="UNAVAILABLE" VBox.vgrow="ALWAYS">
+        <tabs>
+            <Tab text="Mesa 1">
+                <content>
+                    <VBox spacing="10" alignment="CENTER">
+                        <padding>
+                            <Insets top="20" right="20" bottom="20" left="20"/>
+                        </padding>
+
+                        <ScrollPane fitToWidth="true" VBox.vgrow="ALWAYS">
+                            <VBox fx:id="pedidoContainer1"
+                                  style="-fx-border-width: 1px; -fx-border-color: gray;">
+                                <padding>
+                                    <Insets top="10" right="10" bottom="10" left="10"/>
+                                </padding>
+
+                            </VBox>
+                        </ScrollPane>
+
+                        <!-- Botones de Pedido -->
+                        <HBox alignment="CENTER" spacing="10">
+                            <Button fx:id="cancelarPedidoBtn1"
+                                    text="Cancelar Pedido"
+                                    visible="false"
+                                    managed="true"
+                                    onAction="#cancelarPedidoAmesa"
+                            />
+                            <Button fx:id="enviarPedidoBtn1"
+                                    text="Enviar Pedido"
+                                    visible="false"
+                                    managed="true"
+                                    onAction="#admitirPedidoAmesa"
+                            />
+                        </HBox>
+
+                        <!-- Contenedor de Chat -->
+                        <VBox fx:id="chatContainer1" VBox.vgrow="ALWAYS"
                               style="-fx-border-width: 1px; -fx-border-color: gray;">
                             <padding>
                                 <Insets top="10" right="10" bottom="10" left="10"/>
                             </padding>
 
+                            <VBox alignment="CENTER" spacing="10" VBox.vgrow="ALWAYS">
+                                <ScrollPane fx:id="messagesScroll1" fitToWidth="true"
+                                            VBox.vgrow="ALWAYS"
+                                            style="-fx-background-color: transparent;">
+                                    <TextFlow fx:id="messagesArea1"
+                                              style="-fx-padding: 5px;"/>
+                                </ScrollPane>
+                                <TextField fx:id="inputField1" HBox.hgrow="ALWAYS" promptText="Introduzca mensaje..."/>
+                                <Button fx:id="sendButton1" text="Send"/>
+                            </VBox>
                         </VBox>
-                    </ScrollPane>
 
-                    <!-- Botones de Pedido -->
-                    <HBox alignment="CENTER" spacing="10">
-                        <Button fx:id="cancelarPedidoBtn1"
-                                text="Cancelar Pedido"
-                                visible="false"
-                                managed="true"
-                                onAction="#cancelarPedidoAmesa"
-                        />
-                        <Button fx:id="enviarPedidoBtn1"
-                                text="Enviar Pedido"
-                                visible="false"
-                                managed="true"
-                                onAction="#admitirPedidoAmesa"
-                        />
-                    </HBox>
+                        <!-- Hard reset de mesa -->
+                        <VBox>
+                            <Button fx:id="hardReset1" text="Resetear Mesa 1"/>
+                        </VBox>
+                    </VBox>
 
-                    <!-- Contenedor de Chat -->
-                    <VBox fx:id="chatContainer1" VBox.vgrow="ALWAYS"
-                          style="-fx-border-width: 1px; -fx-border-color: gray;">
+                </content>
+            </Tab>
+
+            <Tab text="Mesa 2">
+                <content>
+                    <VBox spacing="10" alignment="CENTER">
                         <padding>
-                            <Insets top="10" right="10" bottom="10" left="10"/>
+                            <Insets top="20" right="20" bottom="20" left="20"/>
                         </padding>
 
-                        <VBox alignment="CENTER" spacing="10" VBox.vgrow="ALWAYS">
-                            <ScrollPane fx:id="messagesScroll1" fitToWidth="true"
-                                        VBox.vgrow="ALWAYS"
-                                        style="-fx-background-color: transparent;">
-                                <TextFlow fx:id="messagesArea1"
-                                          style="-fx-padding: 5px;"/>
-                            </ScrollPane>
-                            <TextField fx:id="inputField1" HBox.hgrow="ALWAYS" promptText="Introduzca mensaje..."/>
-                            <Button fx:id="sendButton1" text="Send"/>
-                        </VBox>
-                    </VBox>
+                        <ScrollPane fitToWidth="true" VBox.vgrow="ALWAYS">
+                            <VBox fx:id="pedidoContainer2"
+                                  style="-fx-border-width: 1px; -fx-border-color: gray;">
+                                <padding>
+                                    <Insets top="10" right="10" bottom="10" left="10"/>
+                                </padding>
 
-                    <!-- Hard reset de mesa -->
-                    <VBox>
-                        <Button fx:id="hardReset1" text="Resetear Mesa 1"/>
-                    </VBox>
-                </VBox>
 
-            </content>
-        </Tab>
+                            </VBox>
+                        </ScrollPane>
 
-        <Tab text="Mesa 2">
-            <content>
-                <VBox spacing="10" alignment="CENTER">
-                    <padding>
-                        <Insets top="20" right="20" bottom="20" left="20"/>
-                    </padding>
+                        <!-- Botones de Pedido -->
+                        <HBox alignment="CENTER" spacing="10">
+                            <Button fx:id="cancelarPedidoBtn2"
+                                    text="Cancelar Pedido"
+                                    visible="false"
+                                    managed="true"
+                                    onAction="#cancelarPedidoAmesa"
+                            />
+                            <Button fx:id="enviarPedidoBtn2"
+                                    text="Enviar Pedido"
+                                    visible="false"
+                                    managed="true"
+                                    onAction="#admitirPedidoAmesa"
+                            />
+                        </HBox>
 
-                    <ScrollPane fitToWidth="true" VBox.vgrow="ALWAYS">
-                        <VBox fx:id="pedidoContainer2"
+                        <!-- Contenedor de Chat -->
+                        <VBox fx:id="chatContainer2" VBox.vgrow="ALWAYS"
                               style="-fx-border-width: 1px; -fx-border-color: gray;">
                             <padding>
                                 <Insets top="10" right="10" bottom="10" left="10"/>
                             </padding>
 
-
+                            <VBox alignment="CENTER" spacing="10" VBox.vgrow="ALWAYS">
+                                <ScrollPane fx:id="messagesScroll2" fitToWidth="true"
+                                            VBox.vgrow="ALWAYS"
+                                            style="-fx-background-color: transparent;">
+                                    <TextFlow fx:id="messagesArea2"
+                                              style="-fx-padding: 5px;"/>
+                                </ScrollPane>
+                                <TextField fx:id="inputField2" HBox.hgrow="ALWAYS" promptText="Introduzca mensaje..."/>
+                                <Button fx:id="sendButton2" text="Send"/>
+                            </VBox>
                         </VBox>
-                    </ScrollPane>
+                        <!-- Hard reset de mesa -->
+                        <VBox>
+                            <Button fx:id="hardReset2" text="Resetear Mesa 2"/>
+                        </VBox>
+                    </VBox>
+                </content>
+            </Tab>
 
-                    <!-- Botones de Pedido -->
-                    <HBox alignment="CENTER" spacing="10">
-                        <Button fx:id="cancelarPedidoBtn2"
-                                text="Cancelar Pedido"
-                                visible="false"
-                                managed="true"
-                                onAction="#cancelarPedidoAmesa"
-                        />
-                        <Button fx:id="enviarPedidoBtn2"
-                                text="Enviar Pedido"
-                                visible="false"
-                                managed="true"
-                                onAction="#admitirPedidoAmesa"
-                        />
-                    </HBox>
-
-                    <!-- Contenedor de Chat -->
-                    <VBox fx:id="chatContainer2" VBox.vgrow="ALWAYS"
-                          style="-fx-border-width: 1px; -fx-border-color: gray;">
+            <Tab text="Mesa 3">
+                <content>
+                    <VBox spacing="10" alignment="CENTER">
                         <padding>
-                            <Insets top="10" right="10" bottom="10" left="10"/>
+                            <Insets top="20" right="20" bottom="20" left="20"/>
                         </padding>
 
-                        <VBox alignment="CENTER" spacing="10" VBox.vgrow="ALWAYS">
-                            <ScrollPane fx:id="messagesScroll2" fitToWidth="true"
-                                        VBox.vgrow="ALWAYS"
-                                        style="-fx-background-color: transparent;">
-                                <TextFlow fx:id="messagesArea2"
-                                          style="-fx-padding: 5px;"/>
-                            </ScrollPane>
-                            <TextField fx:id="inputField2" HBox.hgrow="ALWAYS" promptText="Introduzca mensaje..."/>
-                            <Button fx:id="sendButton2" text="Send"/>
-                        </VBox>
-                    </VBox>
-                    <!-- Hard reset de mesa -->
-                    <VBox>
-                        <Button fx:id="hardReset2" text="Resetear Mesa 2"/>
-                    </VBox>
-                </VBox>
-            </content>
-        </Tab>
+                        <ScrollPane fitToWidth="true" VBox.vgrow="ALWAYS">
+                            <VBox fx:id="pedidoContainer3"
+                                  style="-fx-border-width: 1px; -fx-border-color: gray;">
+                                <padding>
+                                    <Insets top="10" right="10" bottom="10" left="10"/>
+                                </padding>
 
-        <Tab text="Mesa 3">
-            <content>
-                <VBox spacing="10" alignment="CENTER">
-                    <padding>
-                        <Insets top="20" right="20" bottom="20" left="20"/>
-                    </padding>
 
-                    <ScrollPane fitToWidth="true" VBox.vgrow="ALWAYS">
-                        <VBox fx:id="pedidoContainer3"
+                            </VBox>
+                        </ScrollPane>
+
+                        <!-- Botones de Pedido -->
+                        <HBox alignment="CENTER" spacing="10">
+                            <Button fx:id="cancelarPedidoBtn3"
+                                    text="Cancelar Pedido"
+                                    visible="false"
+                                    managed="true"
+                                    onAction="#cancelarPedidoAmesa"
+                            />
+                            <Button fx:id="enviarPedidoBtn3"
+                                    text="Enviar Pedido"
+                                    visible="false"
+                                    managed="true"
+                                    onAction="#admitirPedidoAmesa"
+                            />
+                        </HBox>
+
+                        <!-- Contenedor de Chat -->
+                        <VBox fx:id="chatContainer3" VBox.vgrow="ALWAYS"
                               style="-fx-border-width: 1px; -fx-border-color: gray;">
                             <padding>
                                 <Insets top="10" right="10" bottom="10" left="10"/>
                             </padding>
 
-
+                            <VBox alignment="CENTER" spacing="10" VBox.vgrow="ALWAYS">
+                                <ScrollPane fx:id="messagesScroll3" fitToWidth="true"
+                                            VBox.vgrow="ALWAYS"
+                                            style="-fx-background-color: transparent;">
+                                    <TextFlow fx:id="messagesArea3"
+                                              style="-fx-padding: 5px;"/>
+                                </ScrollPane>
+                                <TextField fx:id="inputField3" HBox.hgrow="ALWAYS" promptText="Introduzca mensaje..."/>
+                                <Button fx:id="sendButton3" text="Send"/>
+                            </VBox>
                         </VBox>
-                    </ScrollPane>
+                        <!-- Hard reset de mesa -->
+                        <VBox>
+                            <Button fx:id="hardReset3" text="Resetear Mesa 3"/>
+                        </VBox>
+                    </VBox>
+                </content>
+            </Tab>
 
-                    <!-- Botones de Pedido -->
-                    <HBox alignment="CENTER" spacing="10">
-                        <Button fx:id="cancelarPedidoBtn3"
-                                text="Cancelar Pedido"
-                                visible="false"
-                                managed="true"
-                                onAction="#cancelarPedidoAmesa"
-                        />
-                        <Button fx:id="enviarPedidoBtn3"
-                                text="Enviar Pedido"
-                                visible="false"
-                                managed="true"
-                                onAction="#admitirPedidoAmesa"
-                        />
-                    </HBox>
-
-                    <!-- Contenedor de Chat -->
-                    <VBox fx:id="chatContainer3" VBox.vgrow="ALWAYS"
-                          style="-fx-border-width: 1px; -fx-border-color: gray;">
+            <Tab text="Mesa 4">
+                <content>
+                    <VBox spacing="10" alignment="CENTER">
                         <padding>
-                            <Insets top="10" right="10" bottom="10" left="10"/>
+                            <Insets top="20" right="20" bottom="20" left="20"/>
                         </padding>
 
-                        <VBox alignment="CENTER" spacing="10" VBox.vgrow="ALWAYS">
-                            <ScrollPane fx:id="messagesScroll3" fitToWidth="true"
-                                        VBox.vgrow="ALWAYS"
-                                        style="-fx-background-color: transparent;">
-                                <TextFlow fx:id="messagesArea3"
-                                          style="-fx-padding: 5px;"/>
-                            </ScrollPane>
-                            <TextField fx:id="inputField3" HBox.hgrow="ALWAYS" promptText="Introduzca mensaje..."/>
-                            <Button fx:id="sendButton3" text="Send"/>
-                        </VBox>
-                    </VBox>
-                    <!-- Hard reset de mesa -->
-                    <VBox>
-                        <Button fx:id="hardReset3" text="Resetear Mesa 3"/>
-                    </VBox>
-                </VBox>
-            </content>
-        </Tab>
+                        <ScrollPane fitToWidth="true" VBox.vgrow="ALWAYS">
+                            <VBox fx:id="pedidoContainer4"
+                                  style="-fx-border-width: 1px; -fx-border-color: gray;">
+                                <padding>
+                                    <Insets top="10" right="10" bottom="10" left="10"/>
+                                </padding>
 
-        <Tab text="Mesa 4">
-            <content>
-                <VBox spacing="10" alignment="CENTER">
-                    <padding>
-                        <Insets top="20" right="20" bottom="20" left="20"/>
-                    </padding>
 
-                    <ScrollPane fitToWidth="true" VBox.vgrow="ALWAYS">
-                        <VBox fx:id="pedidoContainer4"
+                            </VBox>
+                        </ScrollPane>
+
+                        <!-- Botones de Pedido -->
+                        <HBox alignment="CENTER" spacing="10">
+                            <Button fx:id="cancelarPedidoBtn4"
+                                    text="Cancelar Pedido"
+                                    visible="false"
+                                    managed="true"
+                                    onAction="#cancelarPedidoAmesa"
+                            />
+                            <Button fx:id="enviarPedidoBtn4"
+                                    text="Enviar Pedido"
+                                    visible="false"
+                                    managed="true"
+                                    onAction="#admitirPedidoAmesa"
+                            />
+                        </HBox>
+
+                        <!-- Contenedor de Chat -->
+                        <VBox fx:id="chatContainer4" VBox.vgrow="ALWAYS"
                               style="-fx-border-width: 1px; -fx-border-color: gray;">
                             <padding>
                                 <Insets top="10" right="10" bottom="10" left="10"/>
                             </padding>
 
-
+                            <VBox alignment="CENTER" spacing="10" VBox.vgrow="ALWAYS">
+                                <ScrollPane fx:id="messagesScroll4" fitToWidth="true"
+                                            VBox.vgrow="ALWAYS"
+                                            style="-fx-background-color: transparent;">
+                                    <TextFlow fx:id="messagesArea4"
+                                              style="-fx-padding: 5px;"/>
+                                </ScrollPane>
+                                <TextField fx:id="inputField4" HBox.hgrow="ALWAYS" promptText="Introduzca mensaje..."/>
+                                <Button fx:id="sendButton4" text="Send"/>
+                            </VBox>
                         </VBox>
-                    </ScrollPane>
+                        <!-- Hard reset de mesa -->
+                        <VBox>
+                            <Button fx:id="hardReset4" text="Resetear Mesa 4"/>
+                        </VBox>
+                    </VBox>
+                </content>
+            </Tab>
 
-                    <!-- Botones de Pedido -->
-                    <HBox alignment="CENTER" spacing="10">
-                        <Button fx:id="cancelarPedidoBtn4"
-                                text="Cancelar Pedido"
-                                visible="false"
-                                managed="true"
-                                onAction="#cancelarPedidoAmesa"
-                        />
-                        <Button fx:id="enviarPedidoBtn4"
-                                text="Enviar Pedido"
-                                visible="false"
-                                managed="true"
-                                onAction="#admitirPedidoAmesa"
-                        />
-                    </HBox>
-
-                    <!-- Contenedor de Chat -->
-                    <VBox fx:id="chatContainer4" VBox.vgrow="ALWAYS"
-                          style="-fx-border-width: 1px; -fx-border-color: gray;">
+            <Tab text="Mesa 5">
+                <content>
+                    <VBox spacing="10" alignment="CENTER">
                         <padding>
-                            <Insets top="10" right="10" bottom="10" left="10"/>
+                            <Insets top="20" right="20" bottom="20" left="20"/>
                         </padding>
 
-                        <VBox alignment="CENTER" spacing="10" VBox.vgrow="ALWAYS">
-                            <ScrollPane fx:id="messagesScroll4" fitToWidth="true"
-                                        VBox.vgrow="ALWAYS"
-                                        style="-fx-background-color: transparent;">
-                                <TextFlow fx:id="messagesArea4"
-                                          style="-fx-padding: 5px;"/>
-                            </ScrollPane>
-                            <TextField fx:id="inputField4" HBox.hgrow="ALWAYS" promptText="Introduzca mensaje..."/>
-                            <Button fx:id="sendButton4" text="Send"/>
-                        </VBox>
-                    </VBox>
-                    <!-- Hard reset de mesa -->
-                    <VBox>
-                        <Button fx:id="hardReset4" text="Resetear Mesa 4"/>
-                    </VBox>
-                </VBox>
-            </content>
-        </Tab>
+                        <ScrollPane fitToWidth="true" VBox.vgrow="ALWAYS">
+                            <VBox fx:id="pedidoContainer5"
+                                  style="-fx-border-width: 1px; -fx-border-color: gray;">
+                                <padding>
+                                    <Insets top="10" right="10" bottom="10" left="10"/>
+                                </padding>
 
-        <Tab text="Mesa 5">
-            <content>
-                <VBox spacing="10" alignment="CENTER">
-                    <padding>
-                        <Insets top="20" right="20" bottom="20" left="20"/>
-                    </padding>
 
-                    <ScrollPane fitToWidth="true" VBox.vgrow="ALWAYS">
-                        <VBox fx:id="pedidoContainer5"
+                            </VBox>
+                        </ScrollPane>
+
+                        <!-- Botones de Pedido -->
+                        <HBox alignment="CENTER" spacing="10">
+                            <Button fx:id="cancelarPedidoBtn5"
+                                    text="Cancelar Pedido"
+                                    visible="false"
+                                    managed="true"
+                                    onAction="#cancelarPedidoAmesa"
+                            />
+                            <Button fx:id="enviarPedidoBtn5"
+                                    text="Enviar Pedido"
+                                    visible="false"
+                                    managed="true"
+                                    onAction="#admitirPedidoAmesa"
+                            />
+                        </HBox>
+
+                        <!-- Contenedor de Chat -->
+                        <VBox fx:id="chatContainer5" VBox.vgrow="ALWAYS"
                               style="-fx-border-width: 1px; -fx-border-color: gray;">
                             <padding>
                                 <Insets top="10" right="10" bottom="10" left="10"/>
                             </padding>
 
-
+                            <VBox alignment="CENTER" spacing="10" VBox.vgrow="ALWAYS">
+                                <ScrollPane fx:id="messagesScroll5" fitToWidth="true"
+                                            VBox.vgrow="ALWAYS"
+                                            style="-fx-background-color: transparent;">
+                                    <TextFlow fx:id="messagesArea5"
+                                              style="-fx-padding: 5px;"/>
+                                </ScrollPane>
+                                <TextField fx:id="inputField5" HBox.hgrow="ALWAYS" promptText="Introduzca mensaje..."/>
+                                <Button fx:id="sendButton5" text="Send"/>
+                            </VBox>
                         </VBox>
-                    </ScrollPane>
-
-                    <!-- Botones de Pedido -->
-                    <HBox alignment="CENTER" spacing="10">
-                        <Button fx:id="cancelarPedidoBtn5"
-                                text="Cancelar Pedido"
-                                visible="false"
-                                managed="true"
-                                onAction="#cancelarPedidoAmesa"
-                        />
-                        <Button fx:id="enviarPedidoBtn5"
-                                text="Enviar Pedido"
-                                visible="false"
-                                managed="true"
-                                onAction="#admitirPedidoAmesa"
-                        />
-                    </HBox>
-
-                    <!-- Contenedor de Chat -->
-                    <VBox fx:id="chatContainer5" VBox.vgrow="ALWAYS"
-                          style="-fx-border-width: 1px; -fx-border-color: gray;">
-                        <padding>
-                            <Insets top="10" right="10" bottom="10" left="10"/>
-                        </padding>
-
-                        <VBox alignment="CENTER" spacing="10" VBox.vgrow="ALWAYS">
-                            <ScrollPane fx:id="messagesScroll5" fitToWidth="true"
-                                        VBox.vgrow="ALWAYS"
-                                        style="-fx-background-color: transparent;">
-                                <TextFlow fx:id="messagesArea5"
-                                          style="-fx-padding: 5px;"/>
-                            </ScrollPane>
-                            <TextField fx:id="inputField5" HBox.hgrow="ALWAYS" promptText="Introduzca mensaje..."/>
-                            <Button fx:id="sendButton5" text="Send"/>
+                        <!-- Hard reset de mesa -->
+                        <VBox>
+                            <Button fx:id="hardReset5" text="Resetear Mesa 5"/>
                         </VBox>
                     </VBox>
-                    <!-- Hard reset de mesa -->
-                    <VBox>
-                        <Button fx:id="hardReset5" text="Resetear Mesa 5"/>
-                    </VBox>
-                </VBox>
-            </content>
-        </Tab>
+                </content>
+            </Tab>
 
-        <Tab text="Log">
-            <content>
-                <fx:include source="chat-tab.fxml"/>
-            </content>
-        </Tab>
-    </tabs>
-</TabPane>
+            <Tab text="Log">
+                <content>
+                    <fx:include source="chat-tab.fxml"/>
+                </content>
+            </Tab>
+        </tabs>
+    </TabPane>
+
+    <!-- barra inferior -->
+    <HBox fx:id="barraInferior" alignment="CENTER" spacing="5" style="-fx-background-color: #f0f0f0; -fx-padding: 5;">
+        <!-- Control de Volumen -->
+        <HBox alignment="CENTER_LEFT" spacing="5" style="-fx-padding: 0 10;">
+            <Label text="🔊" style="-fx-font-size: 14px;"/>
+            <Slider fx:id="volumenSlider"
+                    min="0"
+                    max="1"
+                    value="1"
+                    blockIncrement="0.1"
+                    majorTickUnit="0.5"
+                    minorTickCount="4"
+                    showTickLabels="false"
+                    showTickMarks="false"
+                    snapToTicks="true"
+                    prefWidth="75"/>
+        </HBox>
+        <TextArea fx:id="lastPedido"
+                  editable="false"
+                  wrapText="true"
+                  text=""
+                  style="-fx-background-color: transparent;
+                     -fx-border-width: 0;
+                     -fx-control-inner-background: transparent;
+                     -fx-text-fill: #333333;
+                     -fx-font-size: 13px;"
+                  prefHeight="60"
+                  HBox.hgrow="ALWAYS"/>
+    </HBox>
+</VBox>

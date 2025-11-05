@@ -24,13 +24,8 @@ public class WebSocketController implements Initializable {
     @FXML
     private TextArea messagesArea;
 
-    @FXML
-    private TextField inputField;
-
-    @FXML
-    private Button sendButton;
-
     private AudioClip notificacionSound;
+    private double notificacionVolumen = 1.0;   // volumen (0.0 a 1.0)
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -41,8 +36,8 @@ public class WebSocketController implements Initializable {
             URL soundUrl = getClass().getResource("/sounds/notificacion.mp3");
             if (soundUrl != null) {
                 notificacionSound = new AudioClip(soundUrl.toString());
-                // volumen (0.0 a 1.0)
-                notificacionSound.setVolume(1.0);
+
+                notificacionSound.setVolume(notificacionVolumen);
             } else {
                 System.err.println("No se pudo cargar el archivo de sonido");
             }
@@ -51,8 +46,6 @@ public class WebSocketController implements Initializable {
         }
 
         connectWebSocket("Restaurante");
-
-        //inputField.setOnAction(event -> sendMessage());
     }
 
     private void connectWebSocket(String clientId) {
@@ -73,11 +66,12 @@ public class WebSocketController implements Initializable {
 
     @OnMessage
     public void onMessage(String message) {
+        // "enrutado" para mensajes entrantes
         Platform.runLater(() -> {
             try {
                 Message msg = gson.fromJson(message, Message.class);
 
-                // sonido para mensajes que no son propios
+                // sonido para mensajes no propios
                 if (!Objects.equals(msg.sender, "Restaurante")) {
                     reproducirSonidoAlerta();
                 }
@@ -90,6 +84,7 @@ public class WebSocketController implements Initializable {
                     System.out.println("pedido incoming");
                     CommsManager.getInstance().webSocketAmain(msg);
                     CommsManager.getInstance().notificarPedido(msg);
+                    CommsManager.getInstance().sendLastPedidoBarraInferior("Nuevo pedido: "+msg.sender+" / Hora: " + timestampAHora(msg.timestamp));
                     messagesArea.appendText("Pedido recibido: " + msg.message + "\n");
                 }
                 else if (Objects.equals(msg.type, "error")) {
@@ -125,10 +120,11 @@ public class WebSocketController implements Initializable {
         Platform.runLater(() -> messagesArea.appendText("Error WebSocket: " + error.getMessage() + "\n"));
     }
 
+    // ademas mandan info a log
     public void enviarMensajeChat(String message, String destino) {
         if (session != null && session.isOpen()) {
             Message msg = new Message("chat", message, "Restaurante", destino);
-            messagesArea.appendText("Mensaje enviado  a "+msg.sender);
+            messagesArea.appendText("Mensaje enviado a "+msg.destino+" / Mensaje: "+msg.message+" / timestamp: "+msg.timestamp+ " / Type: "+msg.type);
             session.getAsyncRemote().sendText(gson.toJson(msg));
         }else{
             System.out.println("Well shit. Server down");
@@ -138,6 +134,7 @@ public class WebSocketController implements Initializable {
     public void enviarMensajePedidoEnviadoAmesaAppM(String destino) {
         if (session != null && session.isOpen()) {
             Message msg = new Message("pedido_enviado_a_mesa", "", "Restaurante", destino);
+            messagesArea.appendText("Mensaje enviado a "+msg.destino+" / Mensaje: "+msg.message+" / timestamp: "+msg.timestamp+ " / Type: "+msg.type);
             session.getAsyncRemote().sendText(gson.toJson(msg));
         } else {
             System.out.println("Well shit. Server down");
@@ -147,10 +144,36 @@ public class WebSocketController implements Initializable {
     public void enviarMensajePedidoCanceladoAmesaAppM(String destino) {
         if (session != null && session.isOpen()) {
             Message msg = new Message("pedido_cancelado_a_mesa", "", "Restaurante", destino);
+            messagesArea.appendText("Mensaje enviado  a "+msg.destino+" / Mensaje: "+msg.message+" / timestamp: "+msg.timestamp+ " / Type: "+msg.type);
             session.getAsyncRemote().sendText(gson.toJson(msg));
         } else {
             System.out.println("Well shit. Server down");
         }
+    }
+
+    // getter para volumen
+    public double getNotificacionVolumen() {
+        return notificacionVolumen;
+    }
+
+    // setter para volumen
+    public void setNotificacionVolumen(double volume) {
+        if (volume < 0.0) {
+            this.notificacionVolumen = 0.0;
+        } else if (volume > 1.0) {
+            this.notificacionVolumen = 1.0;
+        } else {
+            this.notificacionVolumen = volume;
+        }
+        // actualizar
+        if (notificacionSound != null) {
+            notificacionSound.setVolume(this.notificacionVolumen);
+        }
+    }
+
+    // para cambiar el volumen desde MainController
+    public void cambiarVolumenNotificacion(double nuevoVolumen) {
+        setNotificacionVolumen(nuevoVolumen);
     }
 
     private void reproducirSonidoAlerta() {
@@ -161,6 +184,13 @@ public class WebSocketController implements Initializable {
         } catch (Exception e) {
             System.err.println("Error reproduciendo sonido: " + e.getMessage());
         }
+    }
+
+    private String timestampAHora(long timestamp) {
+        return java.time.LocalDateTime.ofInstant(
+                java.time.Instant.ofEpochMilli(timestamp),
+                java.time.ZoneId.systemDefault()
+        ).format(java.time.format.DateTimeFormatter.ofPattern("HH:mm:ss"));
     }
 
     public static class Message {

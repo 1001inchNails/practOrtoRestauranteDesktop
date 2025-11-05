@@ -6,11 +6,10 @@
   <component name="ChangeListManager">
     <list default="true" id="f631c361-9395-4168-8551-4d8f33424e08" name="Changes" comment="tabs listo">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/practortorestaurantedesktopp/HelloApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/practortorestaurantedesktopp/HelloApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/practortorestaurantedesktopp/CommsManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/practortorestaurantedesktopp/CommsManager.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/practortorestaurantedesktopp/MainController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/practortorestaurantedesktopp/MainController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/practortorestaurantedesktopp/WebSocketController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/practortorestaurantedesktopp/WebSocketController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/practortorestaurantedesktopp/api/ApiClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/practortorestaurantedesktopp/api/ApiClient.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/module-info.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/practortorestaurantedesktopp/main-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/example/practortorestaurantedesktopp/main-view.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
